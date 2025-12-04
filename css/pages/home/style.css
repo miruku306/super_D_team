@@ -30,7 +30,7 @@ header nav a {
 
 /* Hero */
 .hero {
-    background: url("ここに画像のパスと名前を貼る") center/cover no-repeat;
+    background: url("../../../img/home_title.jpg") center/cover no-repeat;
     height: 440px;
     display: flex;
     flex-direction: column;
