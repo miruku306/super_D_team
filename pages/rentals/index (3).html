@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貸し出しゲーム | ボードゲームカフェ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="nav-left">
+        <a href="index.html" class="logo">🏠 Home</a>
+        <a href="#">Menu & Games</a>
+        <a href="index.html">ご予約</a>
+    </div>
+    <button class="reserve-btn">予約する</button>
+</header>
+
+<main>
+    <h1 class="page-title">貸し出しゲーム一覧</h1>
+    <p class="subtitle">現在、店内で貸し出し可能なボードゲームはこちらです。</p>
+
+    <section class="rental-container">
+        <div class="filter-controls">
+            <input type="text" placeholder="ゲーム名で検索..." class="search-input">
+            <select class="filter-select">
+                <option value="">人数で絞り込む</option>
+                <option value="2">2名</option>
+                <option value="3-4">3-4名</option>
+                <option value="5+">5名以上</option>
+            </select>
+            <select class="filter-select">
+                <option value="">ジャンルで絞り込む</option>
+                <option value="strategy">戦略</option>
+                <option value="party">パーティ</option>
+                <option value="abstract">アブストラクト</option>
+            </select>
+        </div>
+
+        <div class="game-list">
+            
+            <div class="game-card">
+                <h3 class="game-name">カタンの開拓者たち</h3>
+                <p class="game-details">人数: 3-4名 | ジャンル: 戦略</p>
+                <p class="game-description">無人島を開拓し、資源を交換して勝利点を競う定番ゲーム。</p>
+                <button class="rental-status available">貸出可能</button>
+            </div>
+            
+            <div class="game-card">
+                <h3 class="game-name">ドミニオン</h3>
+                <p class="game-details">人数: 2-4名 | ジャンル: デッキ構築</p>
+                <p class="game-description">カードを集め、デッキを強化して勝利を目指すデッキ構築ゲームの金字塔。</p>
+                <button class="rental-status loaned">貸出中</button>
+            </div>
+            
+            <div class="game-card">
+                <h3 class="game-name">人狼</h3>
+                <p class="game-details">人数: 5-10名 | ジャンル: パーティ</p>
+                <p class="game-description">会話を通じて人狼を探し出す、大人数で盛り上がる心理戦ゲーム。</p>
+                <button class="rental-status available">貸出可能</button>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-name">カルカソンヌ</h3>
+                <p class="game-details">人数: 2-5名 | ジャンル: タイル配置</p>
+                <p class="game-description">タイルを配置して南フランスの風景を作り上げる、シンプルな陣取りゲーム。</p>
+                <button class="rental-status loaned">貸出中</button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <p>
+                Discover a world of strategy and fun. Your premier destination for board games and delicious treats.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Explore</h3>
+            <a href="index.html">Home</a>
+            <a href="#">Menu & Games</a>
+            <a href="#">Reservations</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Resources</h3>
+            <a href="#">Access & Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Support</h3>
+            <a href="#">FAQ</a>
+            <a href="#">Help Center</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>123 Game Lane, Boardville, BG 54321</p>
+            <p>Email: info@boardgamecafeofficialsite.com</p>
+            <p>Phone: (123) 456-7890</p>
+        </div>
+    </div>
+
+    <p class="footer-bottom">© 2025 Board Game Cafe Official Site. All rights reserved.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // すべての貸し出しステータスボタンを取得
+        const rentalButtons = document.querySelectorAll('.rental-status');
+
+        rentalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.classList.contains('available')) {
+                    // 現在「貸出可能」の場合: 「貸出中」に切り替える
+                    this.classList.remove('available');
+                    this.classList.add('loaned');
+                    this.textContent = '貸出中';
+                    alert(this.previousElementSibling.previousElementSibling.textContent + ' を貸出中にしました。');
+                } else if (this.classList.contains('loaned')) {
+                    // 現在「貸出中」の場合: 「貸出可能」に切り替える
+                    this.classList.remove('loaned');
+                    this.classList.add('available');
+                    this.textContent = '貸出可能';
+                    alert(this.previousElementSibling.previousElementSibling.textContent + ' を返却（貸出可能）にしました。');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
