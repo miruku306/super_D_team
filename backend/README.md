@@ -11,10 +11,10 @@ npm install
 
 ### 2. 環境変数の設定
 
-`.env.example` を `.env` にコピーして、Supabase の設定を記入：
+`.dev.vars.example` を `.dev.vars` にコピーして、Supabase の設定を記入：
 
 ```bash
-cp .env.example .env
+cp .dev.vars.example .dev.vars
 ```
 
 `.env` ファイルを編集：
