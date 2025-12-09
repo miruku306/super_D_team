@@ -1,0 +1,29 @@
+{
+  "name": "super-d-team-backend",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "tsc",
+    "deploy": "wrangler deploy",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "supabase",
+    "boardgame",
+    "rental"
+  ],
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3",
+    "hono": "^4.10.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "wrangler": "^4.53.0"
+  }
+}
