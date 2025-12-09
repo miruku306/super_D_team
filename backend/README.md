@@ -21,10 +21,12 @@ cp .dev.vars.example .dev.vars
 
 ```env
 SUPABASE_URL=https://your-project-id.supabase.co
+＃
+SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
+SUPABASE_SECRET_KEY=your-supabase-secret-key
 
-# 新形式のキー（推奨）
-SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
-SUPABASE_SECRET_KEY=sb_secret_...
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 ```
 
 ## 使い方
