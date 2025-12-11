@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ボードゲームカタログ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"></div>
+            <a href="#home">Home</a>
+            <a href="#menu">Menu & Games</a>
+            <a href="#access">Access & Contact</a>
+            <a href="#reserve" class="reserve-btn">📅 テーブルを予約</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>カテゴリー</h3>
+            <div class="filter-section">
+                <label><input type="checkbox"> ドリンク</label>
+                <label><input type="checkbox"> フード</label>
+                <label><input type="checkbox" checked> ボードゲーム</label>
+            </div>
+
+            <div class="filter-section">
+                <h4>ボードゲーム絞り込み</h4>
+                <div class="player-range">
+                    <div class="range-labels">
+                        <span>2人</span>
+                        <span>4人</span>
+                    </div>
+                    <input type="range" min="2" max="4" value="3">
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h4>プレイ時間 <span>▼</span></h4>
+                <label><input type="checkbox" checked> 全て</label>
+                <label><input type="checkbox"> 〜30</label>
+                <label><input type="checkbox"> 30-60</label>
+                <label><input type="checkbox"> 60分以上</label>
+            </div>
+
+            <div class="filter-section">
+                <h4>ジャンル <span>▼</span></h4>
+                <label><input type="checkbox" checked> 全て</label>
+                <label><input type="checkbox"> 戦略</label>
+                <label><input type="checkbox"> タイル</label>
+                <label><input type="checkbox"> 拡張子</label>
+                <label><input type="checkbox"> 陣営</label>
+                <label><input type="checkbox"> ワーカープレイス</label>
+                <label><input type="checkbox"> 対戦ド</label>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1>ボードゲームカタログ</h1>
+            <div class="game-grid">
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="images/catan.jpg" alt="カタンの開拓者たち">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">カタンの開拓者たち</h3>
+                        <p class="game-description">無人島を舞台に、資源を集めて島の開拓を広げる戦略ゲーム。交渉と運が鍵。</p>
+                        <div class="game-meta">
+                            <span>👥 3-4人</span>
+                            <span>⏱️ 60-90分</span>
+                            <span>🎯 戦略</span>
+                        </div>
+                        <span class="availability in-use">貸出中: 中</span>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="images/carcassonne.jpg" alt="カルカソンヌ">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">カルカソンヌ</h3>
+                        <p class="game-description">タイルを配置して街を広げ、道を繋ぎ、修道院を建てる。手軽に楽しめるタイル配置ゲーム。</p>
+                        <div class="game-meta">
+                            <span>👥 2-5人</span>
+                            <span>⏱️ 30-45分</span>
+                            <span>🎯 タイル配置</span>
+                        </div>
+                        <span class="availability available">貸出可: 易</span>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="images/dominion.jpg" alt="ドミニオン">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">ドミニオン</h3>
+                        <p class="game-description">デッキ構築型カードゲームの金字塔。毎回異なる戦略が求められる奥深さ。</p>
+                        <div class="game-meta">
+                            <span>👥 2-4人</span>
+                            <span>⏱️ 30分</span>
+                            <span>🎯 デッキ構築</span>
+                        </div>
+                        <span class="availability in-use">貸出中: 中</span>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="images/ticket-to-ride.jpg" alt="チケット・トゥ・ライド">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">チケット・トゥ・ライド</h3>
+                        <p class="game-description">列車カードを集めて都市間に線路を繋ぐ、家族で楽しめる人気ボードゲーム。</p>
+                        <div class="game-meta">
+                            <span>👥 2-5人</span>
+                            <span>⏱️ 30-60分</span>
+                            <span>🎯 鉄道</span>
+                        </div>
+                        <span class="availability available">貸出可: 易</span>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="images/pandemic.jpg" alt="パンデミック">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">パンデミック</h3>
+                        <p class="game-description">世界的な疫病の拡大を防ぐ協力型ゲーム。チームワークが勝利の鍵。</p>
+                        <div class="game-meta">
+                            <span>👥 2-4人</span>
+                            <span>⏱️ 45分</span>
+                            <span>🎯 協力</span>
+                        </div>
+                        <span class="availability available">貸出可: 易</span>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-image">
+                        <img src="images/agricola.jpg" alt="アグリコラ">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">アグリコラ</h3>
+                        <p class="game-description">農場を発展させる本格的ワーカープレースメント。やり込み要素満載。</p>
+                        <div class="game-meta">
+                            <span>👥 1-4人</span>
+                            <span>⏱️ 90-120分</span>
+                            <span>🎯 戦略</span>
+                        </div>
+                        <span class="availability in-use">貸出中: 中</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Explore</h4>
+                <p><a href="#home">Home</a></p>
+                <p><a href="#menu">Menu & Games</a></p>
+                <p><a href="#reservations">Reservations</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <p><a href="#access">Access & Contact</a></p>
+                <p><a href="#privacy">Privacy Policy</a></p>
+                <p><a href="#terms">Terms of Service</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <p><a href="#faq">FAQ</a></p>
+                <p><a href="#help">Help Center</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>123 Game Lane, Boardville, BG 54321</p>
+                <p>Email: info@boardgamecafeofficialsite.com</p>
+                <p>Phone: (123) 456-7890</p>
+                <div class="social-links">
+                    <a href="#facebook">f</a>
+                    <a href="#twitter">t</a>
+                    <a href="#instagram">i</a>
+                    <a href="#youtube">y</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Board Game Cafe Official Site. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
