@@ -2,31 +2,48 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html,body { height: 100%; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; color:#222; background:#f7f9fb; }
 
-/* ヘッダー */
-.header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 24px;
-  background:linear-gradient(90deg,#ffffffcc,#f3fbffcc);
-  border-bottom:1px solid #e6eef7;
-  position:sticky;
-  top:0;
-  z-index:20;
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
 }
-.logo { font-weight:700; text-decoration:none; color:#333; margin-right:18px; }
-.nav-links a { margin-right:12px; text-decoration:none; color:#4b5563; font-size:14px; }
-.primary-btn, .reserve-btn {
-  background:#2b8eff;
-  color:#fff;
-  border:none;
-  padding:8px 14px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:600;
-  box-shadow:0 3px 8px rgba(43,142,255,0.18);
+header nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
 }
-.primary-btn:active { transform:translateY(1px); }
+.reserve-btn {
+    padding: 8px 18px;
+    background: #704125;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← アイコンと文字の間隔 */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.logo-icon {
+    width: 100px;   /* アイコンのサイズ調整 */
+    height: 100px;  /* 好みに合わせて変更可能 */
+    object-fit: contain;
+}
 
 /* コンテナ */
 .container { max-width:980px; margin:36px auto; padding:0 18px; }
@@ -116,15 +133,31 @@ input:focus, select:focus, textarea:focus {
 .info-card h3 { margin-bottom:8px; color:#12324a; }
 .info-card ul { list-style: disc; padding-left:18px; color:#475569; }
 
-/* フッター */
-.footer {
-  margin-top:36px;
-  padding:18px 24px;
-  background:linear-gradient(180deg,#fff,#f6fbff);
-  border-top:1px solid #e6eef7;
+/* Footer */
+footer {
+    background: #f6f6f6;
+    padding: 50px 10%;
+    font-size: 13px;
 }
-.footer-inner { max-width:980px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
-.footer p { color:#64748b; font-size:13px; }
+footer .columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+footer a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    margin: 3px 0;
+}
+footer .copyright {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #777;
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
+}
 
 /* レスポンシブ */
 @media (max-width:700px) {
