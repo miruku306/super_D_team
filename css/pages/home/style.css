@@ -28,6 +28,26 @@ header nav a {
     font-size: 13px;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← アイコンと文字の間隔 */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.logo-icon {
+    width: 100px;   /* アイコンのサイズ調整 */
+    height: 100px;  /* 好みに合わせて変更可能 */
+    object-fit: contain;
+}
+
 /* Hero */
 .hero {
     background: url("../../../img/home_title.jpg") center/cover no-repeat;
