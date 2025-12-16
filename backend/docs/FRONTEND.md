@@ -84,48 +84,52 @@ async function del(endpoint) {
 
 ### Games（ゲーム）
 
-| メソッド | エンドポイント            | 説明                     |
-| -------- | ------------------------- | ------------------------ |
-| GET      | `/api/games`              | 全ゲーム取得             |
-| GET      | `/api/games/available`    | 在庫のあるゲーム取得     |
-| GET      | `/api/games/search?q=xxx` | ゲーム検索               |
-| GET      | `/api/games/players/:count` | プレイ人数でフィルタ   |
-| GET      | `/api/games/:id`          | 特定のゲーム取得         |
-| GET      | `/api/games/:id/reviews`  | ゲームをレビュー付きで取得 |
-| GET      | `/api/games/:id/rating`   | ゲームの平均評価取得     |
-| POST     | `/api/games`              | ゲーム追加               |
-| PUT      | `/api/games/:id`          | ゲーム更新               |
-| DELETE   | `/api/games/:id`          | ゲーム削除               |
+| メソッド | エンドポイント              | 説明                       |
+| -------- | --------------------------- | -------------------------- |
+| GET      | `/api/games`                | 全ゲーム取得               |
+| GET      | `/api/games/available`      | 在庫のあるゲーム取得       |
+| GET      | `/api/games/search?q=xxx`   | ゲーム検索                 |
+| GET      | `/api/games/players/:count` | プレイ人数でフィルタ       |
+| GET      | `/api/games/:id`            | 特定のゲーム取得           |
+| GET      | `/api/games/:id/reviews`    | ゲームをレビュー付きで取得 |
+| GET      | `/api/games/:id/rating`     | ゲームの平均評価取得       |
+| POST     | `/api/games`                | ゲーム追加                 |
+| PUT      | `/api/games/:id`            | ゲーム更新                 |
+| DELETE   | `/api/games/:id`            | ゲーム削除                 |
 
 ### Reservations（予約）
 
-| メソッド | エンドポイント                        | 説明                           |
-| -------- | ------------------------------------- | ------------------------------ |
-| GET      | `/api/reservations/stats`             | 予約統計取得                   |
-| GET      | `/api/reservations/current`           | 現在予約中の全ゲーム（管理用） |
-| GET      | `/api/reservations/user/:userId`      | ユーザーの予約履歴             |
-| GET      | `/api/reservations/user/:userId/current` | ユーザーの現在予約中        |
-| GET      | `/api/reservations/game/:gameId`      | ゲームの予約履歴               |
-| GET      | `/api/reservations/check?gameId=x&userId=y` | 予約中かチェック         |
-| GET      | `/api/reservations/:id`               | 特定の予約情報取得             |
-| POST     | `/api/reservations`                   | ゲーム予約                     |
-| POST     | `/api/reservations/:id/return`        | ゲーム返却                     |
-| POST     | `/api/reservations/:id/cancel`        | 予約キャンセル                 |
+| メソッド | エンドポイント                              | 説明                           |
+| -------- | ------------------------------------------- | ------------------------------ |
+| GET      | `/api/reservations/stats`                   | 予約統計取得                   |
+| GET      | `/api/reservations/current`                 | 現在予約中の全ゲーム（管理用） |
+| GET      | `/api/reservations/user/:userId`            | ユーザーの予約履歴             |
+| GET      | `/api/reservations/user/:userId/current`    | ユーザーの現在予約中           |
+| GET      | `/api/reservations/guest?email=xxx`         | ゲストの予約履歴               |
+| GET      | `/api/reservations/guest/current?email=xxx` | ゲストの現在予約中             |
+| GET      | `/api/reservations/game/:gameId`            | ゲームの予約履歴               |
+| GET      | `/api/reservations/check?gameId=x&userId=y` | 予約中かチェック               |
+| GET      | `/api/reservations/:id`                     | 特定の予約情報取得             |
+| GET      | `/api/reservations/:id/verify?email=xxx`    | 予約確認（ゲスト用）           |
+| POST     | `/api/reservations`                         | ゲーム予約（認証ユーザー）     |
+| POST     | `/api/reservations/guest`                   | ゲーム予約（ゲスト）           |
+| POST     | `/api/reservations/:id/return`              | ゲーム返却                     |
+| POST     | `/api/reservations/:id/cancel`              | 予約キャンセル                 |
 
 ### Reviews（レビュー）
 
-| メソッド | エンドポイント                        | 説明                       |
-| -------- | ------------------------------------- | -------------------------- |
-| GET      | `/api/reviews/recent?limit=10`        | 最新レビュー取得           |
-| GET      | `/api/reviews/game/:gameId`           | ゲームのレビュー取得       |
-| GET      | `/api/reviews/game/:gameId/stats`     | ゲームの評価統計           |
-| GET      | `/api/reviews/game/:gameId/top?minRating=4` | 高評価レビュー取得   |
-| GET      | `/api/reviews/user/:userId`           | ユーザーのレビュー取得     |
-| GET      | `/api/reviews/check?gameId=x&userId=y` | レビュー済みかチェック    |
-| GET      | `/api/reviews/:id`                    | 特定のレビュー取得         |
-| POST     | `/api/reviews`                        | レビュー投稿               |
-| PUT      | `/api/reviews/:id`                    | レビュー更新               |
-| DELETE   | `/api/reviews/:id?userId=xxx`         | レビュー削除               |
+| メソッド | エンドポイント                              | 説明                   |
+| -------- | ------------------------------------------- | ---------------------- |
+| GET      | `/api/reviews/recent?limit=10`              | 最新レビュー取得       |
+| GET      | `/api/reviews/game/:gameId`                 | ゲームのレビュー取得   |
+| GET      | `/api/reviews/game/:gameId/stats`           | ゲームの評価統計       |
+| GET      | `/api/reviews/game/:gameId/top?minRating=4` | 高評価レビュー取得     |
+| GET      | `/api/reviews/user/:userId`                 | ユーザーのレビュー取得 |
+| GET      | `/api/reviews/check?gameId=x&userId=y`      | レビュー済みかチェック |
+| GET      | `/api/reviews/:id`                          | 特定のレビュー取得     |
+| POST     | `/api/reviews`                              | レビュー投稿           |
+| PUT      | `/api/reviews/:id`                          | レビュー更新           |
+| DELETE   | `/api/reviews/:id?userId=xxx`               | レビュー削除           |
 
 ---
 
@@ -136,66 +140,76 @@ async function del(endpoint) {
 ```html
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ボードゲーム一覧</title>
-  <style>
-    .game-card {
-      border: 1px solid #ddd;
-      padding: 16px;
-      margin: 8px;
-      border-radius: 8px;
-    }
-    .game-card h3 { margin: 0 0 8px 0; }
-    .stock { color: green; }
-    .out-of-stock { color: red; }
-  </style>
-</head>
-<body>
-  <h1>ボードゲーム一覧</h1>
-  <div id="games-container"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ボードゲーム一覧</title>
+    <style>
+      .game-card {
+        border: 1px solid #ddd;
+        padding: 16px;
+        margin: 8px;
+        border-radius: 8px;
+      }
+      .game-card h3 {
+        margin: 0 0 8px 0;
+      }
+      .stock {
+        color: green;
+      }
+      .out-of-stock {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ボードゲーム一覧</h1>
+    <div id="games-container"></div>
 
-  <script>
-    const API_BASE = 'http://localhost:8787';
+    <script>
+      const API_BASE = "http://localhost:8787";
 
-    async function fetchGames() {
-      const response = await fetch(`${API_BASE}/api/games`);
-      return response.json();
-    }
+      async function fetchGames() {
+        const response = await fetch(`${API_BASE}/api/games`);
+        return response.json();
+      }
 
-    async function renderGames() {
-      const games = await fetchGames();
-      const container = document.getElementById('games-container');
+      async function renderGames() {
+        const games = await fetchGames();
+        const container = document.getElementById("games-container");
 
-      container.innerHTML = games.map(game => `
+        container.innerHTML = games
+          .map(
+            (game) => `
         <div class="game-card">
           <h3>${game.name}</h3>
-          <p>${game.description || '説明なし'}</p>
+          <p>${game.description || "説明なし"}</p>
           <p>プレイ人数: ${game.min_players}〜${game.max_players}人</p>
-          <p class="${game.stock > 0 ? 'stock' : 'out-of-stock'}">
+          <p class="${game.stock > 0 ? "stock" : "out-of-stock"}">
             在庫: ${game.stock}
           </p>
         </div>
-      `).join('');
-    }
+      `
+          )
+          .join("");
+      }
 
-    renderGames();
-  </script>
-</body>
+      renderGames();
+    </script>
+  </body>
 </html>
 ```
 
 ### ゲーム検索機能
 
 ```html
-<input type="text" id="search-input" placeholder="ゲーム名を検索...">
+<input type="text" id="search-input" placeholder="ゲーム名を検索..." />
 <button onclick="searchGames()">検索</button>
 <div id="search-results"></div>
 
 <script>
   async function searchGames() {
-    const query = document.getElementById('search-input').value;
+    const query = document.getElementById("search-input").value;
     if (!query) return;
 
     const response = await fetch(
@@ -203,27 +217,27 @@ async function del(endpoint) {
     );
     const games = await response.json();
 
-    const resultsDiv = document.getElementById('search-results');
+    const resultsDiv = document.getElementById("search-results");
     resultsDiv.innerHTML = games.length
-      ? games.map(game => `<div>${game.name}</div>`).join('')
-      : '<p>ゲームが見つかりませんでした</p>';
+      ? games.map((game) => `<div>${game.name}</div>`).join("")
+      : "<p>ゲームが見つかりませんでした</p>";
   }
 </script>
 ```
 
-### ゲームを予約する
+### ゲームを予約する（認証ユーザー）
 
 ```javascript
 async function reserveGame(gameId, userId) {
   const response = await fetch(`${API_BASE}/api/reservations`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       gameId: gameId,
-      userId: userId
-    })
+      userId: userId,
+    }),
   });
 
   const result = await response.json();
@@ -233,7 +247,7 @@ async function reserveGame(gameId, userId) {
     return null;
   }
 
-  alert('予約が完了しました！');
+  alert("予約が完了しました！");
   return result;
 }
 
@@ -241,19 +255,102 @@ async function reserveGame(gameId, userId) {
 // reserveGame(1, 'user-uuid-here');
 ```
 
+### ゲームを予約する（ゲスト）
+
+```javascript
+async function reserveGameAsGuest(gameId, guestInfo) {
+  const response = await fetch(`${API_BASE}/api/reservations/guest`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      gameId: gameId,
+      guestInfo: {
+        name: guestInfo.name,
+        email: guestInfo.email,
+        phone: guestInfo.phone, // オプション
+      },
+    }),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    alert(`予約失敗: ${result.error}`);
+    return null;
+  }
+
+  alert("予約が完了しました！予約ID: " + result.reservation_id);
+  return result;
+}
+
+// 使用例
+// reserveGameAsGuest(1, {
+//   name: '田中太郎',
+//   email: 'tanaka@example.com',
+//   phone: '090-1234-5678'
+// });
+```
+
+### ゲスト予約フォームの実装例
+
+```html
+<form id="guest-reservation-form">
+  <h3>ゲスト予約</h3>
+
+  <label>お名前:</label>
+  <input type="text" id="guest-name" required />
+
+  <label>メールアドレス:</label>
+  <input type="email" id="guest-email" required />
+
+  <label>電話番号（任意）:</label>
+  <input type="tel" id="guest-phone" />
+
+  <button type="submit">予約する</button>
+</form>
+
+<script>
+  document
+    .getElementById("guest-reservation-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const gameId = 1; // 予約したいゲームのID
+      const guestInfo = {
+        name: document.getElementById("guest-name").value,
+        email: document.getElementById("guest-email").value,
+        phone: document.getElementById("guest-phone").value || undefined,
+      };
+
+      const result = await reserveGameAsGuest(gameId, guestInfo);
+
+      if (result) {
+        // 予約IDを保存（確認用）
+        localStorage.setItem("lastReservationId", result.reservation_id);
+        localStorage.setItem("lastReservationEmail", guestInfo.email);
+      }
+    });
+</script>
+```
+
 ### ゲームを返却する
 
 ```javascript
 async function returnGame(reservationId, userId) {
-  const response = await fetch(`${API_BASE}/api/reservations/${reservationId}/return`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      userId: userId
-    })
-  });
+  const response = await fetch(
+    `${API_BASE}/api/reservations/${reservationId}/return`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    }
+  );
 
   const result = await response.json();
 
@@ -262,7 +359,7 @@ async function returnGame(reservationId, userId) {
     return null;
   }
 
-  alert('返却が完了しました！');
+  alert("返却が完了しました！");
   return result;
 }
 ```
@@ -271,15 +368,18 @@ async function returnGame(reservationId, userId) {
 
 ```javascript
 async function cancelReservation(reservationId, userId) {
-  const response = await fetch(`${API_BASE}/api/reservations/${reservationId}/cancel`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      userId: userId
-    })
-  });
+  const response = await fetch(
+    `${API_BASE}/api/reservations/${reservationId}/cancel`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    }
+  );
 
   const result = await response.json();
 
@@ -288,7 +388,7 @@ async function cancelReservation(reservationId, userId) {
     return null;
   }
 
-  alert('予約がキャンセルされました');
+  alert("予約がキャンセルされました");
   return result;
 }
 ```
@@ -298,16 +398,16 @@ async function cancelReservation(reservationId, userId) {
 ```javascript
 async function submitReview(gameId, userId, rating, comment) {
   const response = await fetch(`${API_BASE}/api/reviews`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       game_id: gameId,
       user_id: userId,
-      rating: rating,      // 1〜5の整数
-      comment: comment     // レビューコメント
-    })
+      rating: rating, // 1〜5の整数
+      comment: comment, // レビューコメント
+    }),
   });
 
   const result = await response.json();
@@ -317,7 +417,7 @@ async function submitReview(gameId, userId, rating, comment) {
     return null;
   }
 
-  alert('レビューを投稿しました！');
+  alert("レビューを投稿しました！");
   return result;
 }
 ```
@@ -344,16 +444,18 @@ async function submitReview(gameId, userId, rating, comment) {
 </form>
 
 <script>
-  document.getElementById('review-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
+  document
+    .getElementById("review-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const gameId = 1;  // 対象ゲームのID
-    const userId = 'current-user-id';  // ログイン中のユーザーID
-    const rating = parseInt(document.getElementById('rating').value);
-    const comment = document.getElementById('comment').value;
+      const gameId = 1; // 対象ゲームのID
+      const userId = "current-user-id"; // ログイン中のユーザーID
+      const rating = parseInt(document.getElementById("rating").value);
+      const comment = document.getElementById("comment").value;
 
-    await submitReview(gameId, userId, rating, comment);
-  });
+      await submitReview(gameId, userId, rating, comment);
+    });
 </script>
 ```
 
@@ -362,25 +464,111 @@ async function submitReview(gameId, userId, rating, comment) {
 ```javascript
 async function showMyReservations(userId) {
   // 現在予約中のゲームを取得
-  const response = await fetch(`${API_BASE}/api/reservations/user/${userId}/current`);
+  const response = await fetch(
+    `${API_BASE}/api/reservations/user/${userId}/current`
+  );
   const reservations = await response.json();
 
-  const container = document.getElementById('my-reservations');
+  const container = document.getElementById("my-reservations");
 
   if (reservations.length === 0) {
-    container.innerHTML = '<p>現在予約中のゲームはありません</p>';
+    container.innerHTML = "<p>現在予約中のゲームはありません</p>";
     return;
   }
 
-  container.innerHTML = reservations.map(r => `
+  container.innerHTML = reservations
+    .map(
+      (r) => `
     <div class="reservation-card">
-      <h4>${r.games?.name || 'ゲーム名不明'}</h4>
-      <p>予約日: ${new Date(r.reserved_at).toLocaleDateString('ja-JP')}</p>
+      <h4>${r.games?.name || "ゲーム名不明"}</h4>
+      <p>予約日: ${new Date(r.reserved_at).toLocaleDateString("ja-JP")}</p>
       <button onclick="returnGame(${r.id}, '${userId}')">返却する</button>
-      <button onclick="cancelReservation(${r.id}, '${userId}')">キャンセル</button>
+      <button onclick="cancelReservation(${
+        r.id
+      }, '${userId}')">キャンセル</button>
     </div>
-  `).join('');
+  `
+    )
+    .join("");
 }
+```
+
+### ゲストの予約一覧を表示
+
+```javascript
+async function showGuestReservations(email) {
+  // ゲストの現在予約中のゲームを取得
+  const response = await fetch(
+    `${API_BASE}/api/reservations/guest/current?email=${encodeURIComponent(
+      email
+    )}`
+  );
+
+  if (!response.ok) {
+    alert("予約情報の取得に失敗しました");
+    return;
+  }
+
+  const reservations = await response.json();
+  const container = document.getElementById("guest-reservations");
+
+  if (reservations.length === 0) {
+    container.innerHTML = "<p>現在予約中のゲームはありません</p>";
+    return;
+  }
+
+  container.innerHTML = reservations
+    .map(
+      (r) => `
+    <div class="reservation-card">
+      <h4>${r.games?.title || "ゲーム名不明"}</h4>
+      <p>予約ID: ${r.id}</p>
+      <p>予約日: ${new Date(r.reserved_at).toLocaleDateString("ja-JP")}</p>
+      <p>予約者: ${r.guest_name}</p>
+    </div>
+  `
+    )
+    .join("");
+}
+
+// 使用例
+// const email = prompt('メールアドレスを入力してください');
+// if (email) showGuestReservations(email);
+```
+
+### 予約を確認する（ゲスト用）
+
+```javascript
+async function verifyGuestReservation(reservationId, email) {
+  const response = await fetch(
+    `${API_BASE}/api/reservations/${reservationId}/verify?email=${encodeURIComponent(
+      email
+    )}`
+  );
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      alert("予約が見つかりません。予約IDとメールアドレスを確認してください。");
+    } else {
+      alert("予約の確認に失敗しました");
+    }
+    return null;
+  }
+
+  const reservation = await response.json();
+
+  // 予約情報を表示
+  console.log("予約情報:", reservation);
+  return reservation;
+}
+
+// 使用例：URLパラメータから予約IDとメールを取得
+// const params = new URLSearchParams(window.location.search);
+// const reservationId = params.get('id');
+// const email = params.get('email');
+// if (reservationId && email) {
+//   verifyGuestReservation(reservationId, email);
+// }
 ```
 
 ---
@@ -402,13 +590,13 @@ async function safeApiCall(apiFunction) {
   try {
     return await apiFunction();
   } catch (error) {
-    console.error('APIエラー:', error);
+    console.error("APIエラー:", error);
 
     // ユーザーに通知
     if (error.message) {
       alert(error.message);
     } else {
-      alert('エラーが発生しました。もう一度お試しください。');
+      alert("エラーが発生しました。もう一度お試しください。");
     }
 
     return null;
@@ -416,7 +604,9 @@ async function safeApiCall(apiFunction) {
 }
 
 // 使用例
-const games = await safeApiCall(() => fetch(`${API_BASE}/api/games`).then(r => r.json()));
+const games = await safeApiCall(() =>
+  fetch(`${API_BASE}/api/games`).then((r) => r.json())
+);
 ```
 
 ### HTTP ステータスコード
@@ -424,7 +614,7 @@ const games = await safeApiCall(() => fetch(`${API_BASE}/api/games`).then(r => r
 | コード | 意味                   |
 | ------ | ---------------------- |
 | 200    | 成功                   |
-| 201    | 作成成功（POST時）     |
+| 201    | 作成成功（POST 時）    |
 | 400    | リクエストエラー       |
 | 404    | リソースが見つからない |
 | 500    | サーバーエラー         |
@@ -442,13 +632,13 @@ const games = await safeApiCall(() => fetch(`${API_BASE}/api/games`).then(r => r
 
 ```javascript
 async function authenticatedRequest(endpoint, options = {}) {
-  const token = localStorage.getItem('auth_token'); // または Supabase セッションから取得
+  const token = localStorage.getItem("auth_token"); // または Supabase セッションから取得
 
   return apiRequest(endpoint, {
     ...options,
     headers: {
       ...options.headers,
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 }
@@ -500,128 +690,176 @@ curl "http://localhost:8787/api/games/search?q=カタン"
 ```html
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ボードゲーム貸出システム</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { font-family: sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-    .game-card { border: 1px solid #ddd; padding: 16px; border-radius: 8px; }
-    .game-card h3 { margin: 0 0 8px 0; }
-    .stock { color: green; font-weight: bold; }
-    .out-of-stock { color: red; font-weight: bold; }
-    .search-box { margin-bottom: 20px; }
-    .search-box input { padding: 8px; width: 300px; }
-    .search-box button { padding: 8px 16px; }
-    button { cursor: pointer; padding: 8px 16px; margin: 4px; }
-    .btn-reserve { background: #4CAF50; color: white; border: none; border-radius: 4px; }
-    .btn-reserve:disabled { background: #ccc; cursor: not-allowed; }
-  </style>
-</head>
-<body>
-  <h1>ボードゲーム貸出システム</h1>
-
-  <div class="search-box">
-    <input type="text" id="search-input" placeholder="ゲーム名で検索...">
-    <button onclick="searchGames()">検索</button>
-    <button onclick="loadAllGames()">全て表示</button>
-  </div>
-
-  <div id="games-container" class="game-grid"></div>
-
-  <script>
-    const API_BASE = 'http://localhost:8787';
-    const USER_ID = 'demo-user-001'; // 実際はログイン情報から取得
-
-    // ゲーム一覧を取得
-    async function loadAllGames() {
-      const response = await fetch(`${API_BASE}/api/games`);
-      const games = await response.json();
-      renderGames(games);
-    }
-
-    // ゲーム検索
-    async function searchGames() {
-      const query = document.getElementById('search-input').value;
-      if (!query) {
-        loadAllGames();
-        return;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ボードゲーム貸出システム</title>
+    <style>
+      * {
+        box-sizing: border-box;
       }
-      const response = await fetch(`${API_BASE}/api/games/search?q=${encodeURIComponent(query)}`);
-      const games = await response.json();
-      renderGames(games);
-    }
+      body {
+        font-family: sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+      }
+      .game-card {
+        border: 1px solid #ddd;
+        padding: 16px;
+        border-radius: 8px;
+      }
+      .game-card h3 {
+        margin: 0 0 8px 0;
+      }
+      .stock {
+        color: green;
+        font-weight: bold;
+      }
+      .out-of-stock {
+        color: red;
+        font-weight: bold;
+      }
+      .search-box {
+        margin-bottom: 20px;
+      }
+      .search-box input {
+        padding: 8px;
+        width: 300px;
+      }
+      .search-box button {
+        padding: 8px 16px;
+      }
+      button {
+        cursor: pointer;
+        padding: 8px 16px;
+        margin: 4px;
+      }
+      .btn-reserve {
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+      .btn-reserve:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ボードゲーム貸出システム</h1>
 
-    // ゲームを表示
-    function renderGames(games) {
-      const container = document.getElementById('games-container');
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="ゲーム名で検索..." />
+      <button onclick="searchGames()">検索</button>
+      <button onclick="loadAllGames()">全て表示</button>
+    </div>
 
-      if (games.length === 0) {
-        container.innerHTML = '<p>ゲームが見つかりませんでした</p>';
-        return;
+    <div id="games-container" class="game-grid"></div>
+
+    <script>
+      const API_BASE = "http://localhost:8787";
+      const USER_ID = "demo-user-001"; // 実際はログイン情報から取得
+
+      // ゲーム一覧を取得
+      async function loadAllGames() {
+        const response = await fetch(`${API_BASE}/api/games`);
+        const games = await response.json();
+        renderGames(games);
       }
 
-      container.innerHTML = games.map(game => `
+      // ゲーム検索
+      async function searchGames() {
+        const query = document.getElementById("search-input").value;
+        if (!query) {
+          loadAllGames();
+          return;
+        }
+        const response = await fetch(
+          `${API_BASE}/api/games/search?q=${encodeURIComponent(query)}`
+        );
+        const games = await response.json();
+        renderGames(games);
+      }
+
+      // ゲームを表示
+      function renderGames(games) {
+        const container = document.getElementById("games-container");
+
+        if (games.length === 0) {
+          container.innerHTML = "<p>ゲームが見つかりませんでした</p>";
+          return;
+        }
+
+        container.innerHTML = games
+          .map(
+            (game) => `
         <div class="game-card">
           <h3>${escapeHtml(game.name)}</h3>
-          <p>${escapeHtml(game.description || '説明なし')}</p>
+          <p>${escapeHtml(game.description || "説明なし")}</p>
           <p>プレイ人数: ${game.min_players}〜${game.max_players}人</p>
-          <p class="${game.stock > 0 ? 'stock' : 'out-of-stock'}">
+          <p class="${game.stock > 0 ? "stock" : "out-of-stock"}">
             在庫: ${game.stock}
           </p>
           <button
             class="btn-reserve"
             onclick="reserveGame(${game.id})"
-            ${game.stock <= 0 ? 'disabled' : ''}
+            ${game.stock <= 0 ? "disabled" : ""}
           >
-            ${game.stock > 0 ? '予約する' : '在庫なし'}
+            ${game.stock > 0 ? "予約する" : "在庫なし"}
           </button>
         </div>
-      `).join('');
-    }
-
-    // ゲームを予約
-    async function reserveGame(gameId) {
-      if (!confirm('このゲームを予約しますか？')) return;
-
-      try {
-        const response = await fetch(`${API_BASE}/api/reservations`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ gameId, userId: USER_ID })
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          alert(`予約失敗: ${result.error}`);
-          return;
-        }
-
-        alert('予約が完了しました！');
-        loadAllGames(); // 在庫を更新
-      } catch (error) {
-        alert('エラーが発生しました');
-        console.error(error);
+      `
+          )
+          .join("");
       }
-    }
 
-    // XSS対策
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
+      // ゲームを予約
+      async function reserveGame(gameId) {
+        if (!confirm("このゲームを予約しますか？")) return;
 
-    // 初期表示
-    loadAllGames();
-  </script>
-</body>
+        try {
+          const response = await fetch(`${API_BASE}/api/reservations`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ gameId, userId: USER_ID }),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            alert(`予約失敗: ${result.error}`);
+            return;
+          }
+
+          alert("予約が完了しました！");
+          loadAllGames(); // 在庫を更新
+        } catch (error) {
+          alert("エラーが発生しました");
+          console.error(error);
+        }
+      }
+
+      // XSS対策
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      // 初期表示
+      loadAllGames();
+    </script>
+  </body>
 </html>
 ```
