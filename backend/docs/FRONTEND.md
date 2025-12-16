@@ -80,6 +80,24 @@ async function del(endpoint) {
 
 ---
 
+## 予約システムの基本方針
+
+### ゲスト予約を推奨
+
+このシステムでは**ゲスト予約**を主要な予約方法として設計しています。
+
+- ✅ **推奨**: `POST /api/reservations/guest` - お客さんがゲームを予約
+- ✅ **推奨**: `GET /api/reservations/guest?email=xxx` - お客さんが予約を確認
+- ⚠️ **非推奨**: `POST /api/reservations` - 認証ユーザー予約（将来的な会員制度用）
+
+**理由**:
+
+- アカウント作成不要で気軽に利用できる
+- 名前とメールアドレスだけで予約可能
+- 一見さんも常連さんも同じように利用できる
+
+---
+
 ## API エンドポイント一覧
 
 ### Games（ゲーム）
@@ -99,22 +117,39 @@ async function del(endpoint) {
 
 ### Reservations（予約）
 
-| メソッド | エンドポイント                              | 説明                           |
-| -------- | ------------------------------------------- | ------------------------------ |
-| GET      | `/api/reservations/stats`                   | 予約統計取得                   |
-| GET      | `/api/reservations/current`                 | 現在予約中の全ゲーム（管理用） |
-| GET      | `/api/reservations/user/:userId`            | ユーザーの予約履歴             |
-| GET      | `/api/reservations/user/:userId/current`    | ユーザーの現在予約中           |
-| GET      | `/api/reservations/guest?email=xxx`         | ゲストの予約履歴               |
-| GET      | `/api/reservations/guest/current?email=xxx` | ゲストの現在予約中             |
-| GET      | `/api/reservations/game/:gameId`            | ゲームの予約履歴               |
-| GET      | `/api/reservations/check?gameId=x&userId=y` | 予約中かチェック               |
-| GET      | `/api/reservations/:id`                     | 特定の予約情報取得             |
-| GET      | `/api/reservations/:id/verify?email=xxx`    | 予約確認（ゲスト用）           |
-| POST     | `/api/reservations`                         | ゲーム予約（認証ユーザー）     |
-| POST     | `/api/reservations/guest`                   | ゲーム予約（ゲスト）           |
-| POST     | `/api/reservations/:id/return`              | ゲーム返却                     |
-| POST     | `/api/reservations/:id/cancel`              | 予約キャンセル                 |
+#### ゲスト向け（お客さん用）★ 推奨 ★
+
+| メソッド | エンドポイント                              | 説明                    |
+| -------- | ------------------------------------------- | ----------------------- |
+| POST     | `/api/reservations/guest`                   | ゲーム予約              |
+| GET      | `/api/reservations/guest?email=xxx`         | ゲストの予約履歴        |
+| GET      | `/api/reservations/guest/current?email=xxx` | ゲストの現在予約中      |
+| GET      | `/api/reservations/:id/verify?email=xxx`    | 予約確認（ID + メール） |
+
+#### 管理者向け（スタッフ用）
+
+| メソッド | エンドポイント                   | 説明                 |
+| -------- | -------------------------------- | -------------------- |
+| GET      | `/api/reservations/stats`        | 予約統計取得         |
+| GET      | `/api/reservations/current`      | 現在予約中の全ゲーム |
+| GET      | `/api/reservations/game/:gameId` | ゲームの予約履歴     |
+| POST     | `/api/reservations/:id/return`   | ゲーム返却           |
+| POST     | `/api/reservations/:id/cancel`   | 予約キャンセル       |
+
+#### 認証ユーザー向け（将来的な会員制度用・非推奨）
+
+| メソッド | エンドポイント                              | 説明                 |
+| -------- | ------------------------------------------- | -------------------- |
+| POST     | `/api/reservations`                         | ゲーム予約           |
+| GET      | `/api/reservations/user/:userId`            | ユーザーの予約履歴   |
+| GET      | `/api/reservations/user/:userId/current`    | ユーザーの現在予約中 |
+| GET      | `/api/reservations/check?gameId=x&userId=y` | 予約中かチェック     |
+
+#### 共通
+
+| メソッド | エンドポイント          | 説明               |
+| -------- | ----------------------- | ------------------ |
+| GET      | `/api/reservations/:id` | 特定の予約情報取得 |
 
 ### Reviews（レビュー）
 
