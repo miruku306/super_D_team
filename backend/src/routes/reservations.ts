@@ -53,6 +53,44 @@ reservationsRoutes.get("/check", async (c) => {
   return c.json({ isReserved });
 });
 
+// GET /api/reservations/guest?email=xxx - ゲストの予約履歴
+reservationsRoutes.get("/guest", async (c) => {
+  const email = c.req.query("email");
+
+  if (!email) {
+    return c.json({ error: "emailを指定してください" }, 400);
+  }
+
+  // メールアドレスのバリデーション
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return c.json({ error: "有効なメールアドレスを指定してください" }, 400);
+  }
+
+  const reservations = await ReservationsService.getGuestReservations(email);
+  return c.json(reservations);
+});
+
+// GET /api/reservations/guest/current?email=xxx - ゲストの現在予約中
+reservationsRoutes.get("/guest/current", async (c) => {
+  const email = c.req.query("email");
+
+  if (!email) {
+    return c.json({ error: "emailを指定してください" }, 400);
+  }
+
+  // メールアドレスのバリデーション
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return c.json({ error: "有効なメールアドレスを指定してください" }, 400);
+  }
+
+  const reservations = await ReservationsService.getCurrentGuestReservations(
+    email
+  );
+  return c.json(reservations);
+});
+
 // GET /api/reservations/:id - 特定の予約情報取得
 reservationsRoutes.get("/:id", async (c) => {
   const id = parseInt(c.req.param("id"), 10);
@@ -61,6 +99,67 @@ reservationsRoutes.get("/:id", async (c) => {
   }
   const reservation = await ReservationsService.getReservationById(id);
   return c.json(reservation);
+});
+
+// GET /api/reservations/:id/verify?email=xxx - 予約確認（ゲスト用）
+reservationsRoutes.get("/:id/verify", async (c) => {
+  const id = parseInt(c.req.param("id"), 10);
+  const email = c.req.query("email");
+
+  if (isNaN(id)) {
+    return c.json({ error: "有効なIDを指定してください" }, 400);
+  }
+
+  if (!email) {
+    return c.json({ error: "emailを指定してください" }, 400);
+  }
+
+  // メールアドレスのバリデーション
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return c.json({ error: "有効なメールアドレスを指定してください" }, 400);
+  }
+
+  try {
+    const reservation = await ReservationsService.verifyGuestReservation(
+      id,
+      email
+    );
+    return c.json(reservation);
+  } catch (error) {
+    if (error instanceof Error && error.message === "予約が見つかりません") {
+      return c.json({ error: "予約が見つかりません" }, 404);
+    }
+    throw error;
+  }
+});
+
+// POST /api/reservations/guest - ゲスト予約（ユーザー情報付き）
+reservationsRoutes.post("/guest", async (c) => {
+  const body = await c.req.json();
+  const { gameId, guestInfo } = body;
+
+  if (!gameId) {
+    return c.json({ error: "gameIdを指定してください" }, 400);
+  }
+
+  if (!guestInfo || !guestInfo.name || !guestInfo.email) {
+    return c.json(
+      { error: "ゲスト情報（name, email）を指定してください" },
+      400
+    );
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(guestInfo.email)) {
+    return c.json({ error: "有効なメールアドレスを指定してください" }, 400);
+  }
+
+  const result = await ReservationsService.reserveGameAsGuest(
+    gameId,
+    guestInfo
+  );
+  return c.json(result, 201);
 });
 
 // POST /api/reservations - ゲーム予約

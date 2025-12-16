@@ -53,6 +53,9 @@ export interface Database {
           reserved_at: string;
           returned_at: string | null;
           status: string;
+          guest_name: string | null;
+          guest_email: string | null;
+          guest_phone: string | null;
         };
         Insert: {
           id?: number;
@@ -61,6 +64,9 @@ export interface Database {
           reserved_at?: string;
           returned_at?: string | null;
           status?: string;
+          guest_name?: string | null;
+          guest_email?: string | null;
+          guest_phone?: string | null;
         };
         Update: {
           id?: number;
@@ -69,6 +75,9 @@ export interface Database {
           reserved_at?: string;
           returned_at?: string | null;
           status?: string;
+          guest_name?: string | null;
+          guest_email?: string | null;
+          guest_phone?: string | null;
         };
         Relationships: [
           {
@@ -122,6 +131,15 @@ export interface Database {
         Args: {
           p_game_id: number;
           p_user_id: string;
+        };
+        Returns: Json;
+      };
+      reserve_game_as_guest: {
+        Args: {
+          p_game_id: number;
+          p_guest_name: string;
+          p_guest_email: string;
+          p_guest_phone?: string | null;
         };
         Returns: Json;
       };
