@@ -5,6 +5,37 @@ type Reservation = Database["public"]["Tables"]["reservations"]["Row"];
 type ReservationInsert = Database["public"]["Tables"]["reservations"]["Insert"];
 
 /**
+ * ゲストとしてゲームを予約する（ユーザー情報を含む）
+ */
+export async function reserveGameAsGuest(
+  gameId: number,
+  guestInfo: { name: string; email: string; phone?: string }
+) {
+  const { data, error } = await supabase.rpc("reserve_game_as_guest", {
+    p_game_id: gameId,
+    p_guest_name: guestInfo.name,
+    p_guest_email: guestInfo.email,
+    p_guest_phone: guestInfo.phone || null,
+  });
+
+  if (error) {
+    throw new Error(`予約処理に失敗しました: ${error.message}`);
+  }
+
+  const result = data as {
+    success: boolean;
+    error?: string;
+    reservation_id?: number;
+  };
+
+  if (!result.success) {
+    throw new Error(result.error || "予約処理に失敗しました");
+  }
+
+  return result;
+}
+
+/**
  * ゲームを予約する（トランザクション関数を使用）
  */
 export async function reserveGame(gameId: number, userId: string) {
@@ -254,4 +285,98 @@ export async function getReservationStats() {
     returned: returnedReservations || 0,
     cancelled: cancelledReservations || 0,
   };
+}
+
+/**
+ * ゲストの予約履歴を取得（メールアドレスで検索）
+ */
+export async function getGuestReservations(email: string) {
+  const { data, error } = await supabase
+    .from("reservations")
+    .select(
+      `
+      *,
+      games (
+        id,
+        title,
+        image_url
+      )
+    `
+    )
+    .eq("guest_email", email)
+    .order("reserved_at", { ascending: false });
+
+  if (error) {
+    throw new Error(`ゲスト予約履歴の取得に失敗しました: ${error.message}`);
+  }
+
+  return data;
+}
+
+/**
+ * ゲストの現在予約中のゲームを取得
+ */
+export async function getCurrentGuestReservations(email: string) {
+  const { data, error } = await supabase
+    .from("reservations")
+    .select(
+      `
+      *,
+      games (
+        id,
+        title,
+        description,
+        image_url,
+        player_min,
+        player_max
+      )
+    `
+    )
+    .eq("guest_email", email)
+    .eq("status", "reserved")
+    .order("reserved_at", { ascending: false });
+
+  if (error) {
+    throw new Error(
+      `ゲストの現在予約情報の取得に失敗しました: ${error.message}`
+    );
+  }
+
+  return data;
+}
+
+/**
+ * 予約IDとメールアドレスで予約を確認（ゲスト用）
+ */
+export async function verifyGuestReservation(
+  reservationId: number,
+  email: string
+) {
+  const { data, error } = await supabase
+    .from("reservations")
+    .select(
+      `
+      *,
+      games (
+        id,
+        title,
+        description,
+        image_url,
+        player_min,
+        player_max
+      )
+    `
+    )
+    .eq("id", reservationId)
+    .eq("guest_email", email)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      throw new Error("予約が見つかりません");
+    }
+    throw new Error(`予約確認に失敗しました: ${error.message}`);
+  }
+
+  return data;
 }
