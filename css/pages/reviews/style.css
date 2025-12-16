@@ -1,0 +1,123 @@
+/* 全体 */
+body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+}
+
+/* 中央コンテンツ */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* タイトル部分 */
+.title-box {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.title-box h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.title-box p {
+    color: #666;
+}
+
+/* レイアウト（左：画像、右：フォーム） */
+.content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* 左側画像 */
+.left {
+    flex: 1;
+}
+
+.left img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* 右側フォーム */
+.right {
+    flex: 1;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* フォーム */
+.right label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.right input,
+.right textarea,
+.right select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* ボタン */
+button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    background-color: #8d5a3a;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+    body {
+    font-family: sans-serif;
+    background: #fafafa;
+    padding: 40px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #8d5a3a;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+}
+
