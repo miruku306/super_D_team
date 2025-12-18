@@ -61,14 +61,9 @@
 
           <label class="form-row">
             <span class="label-title">貸し出すゲーム</span>
-            <select name="game" required>
+            <select name="game" id="game-select" required>
               <option value="">— ゲームを選択 —</option>
-              <option>カタン</option>
-              <option>ドミニオン</option>
-              <option>パンデミック</option>
-              <option>テラフォーミング・マーズ</option>
-              <option>カルカソンヌ</option>
-              <option>その他（備考に記載）</option>
+              <!-- ゲーム一覧は動的に読み込まれます -->
             </select>
           </label>
 
@@ -87,11 +82,11 @@
           <label class="form-row">
             <span class="label-title">人数（プレイ予定）</span>
             <select name="players">
-              <option>1名</option>
-              <option>2名</option>
-              <option>3名</option>
-              <option selected>4名</option>
-              <option>5名以上</option>
+              <option value="1名">1名</option>
+              <option value="2名">2名</option>
+              <option value="3名">3名</option>
+              <option value="4名" selected>4名</option>
+              <option value="5名以上">5名以上</option>
             </select>
           </label>
 
@@ -152,5 +147,6 @@
         © 2025 Board Game Cafe Official Site. All rights reserved.
       </div>
     </footer>
+    <script src="/js/rentals.js"></script>
   </body>
 </html>
