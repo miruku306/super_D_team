@@ -9,13 +9,25 @@ type ReservationInsert = Database["public"]["Tables"]["reservations"]["Insert"];
  */
 export async function reserveGameAsGuest(
   gameId: number,
-  guestInfo: { name: string; email: string; phone?: string }
+  guestInfo: {
+    name: string;
+    email: string;
+    phone?: string;
+    start_date?: string;
+    end_date?: string;
+    players?: string;
+    notes?: string;
+  }
 ) {
   const { data, error } = await supabase.rpc("reserve_game_as_guest", {
     p_game_id: gameId,
     p_guest_name: guestInfo.name,
     p_guest_email: guestInfo.email,
     p_guest_phone: guestInfo.phone || null,
+    p_start_date: guestInfo.start_date || null,
+    p_end_date: guestInfo.end_date || null,
+    p_players: guestInfo.players || null,
+    p_notes: guestInfo.notes || null,
   });
 
   if (error) {
@@ -26,6 +38,7 @@ export async function reserveGameAsGuest(
     success: boolean;
     error?: string;
     reservation_id?: number;
+    id?: number;
   };
 
   if (!result.success) {
