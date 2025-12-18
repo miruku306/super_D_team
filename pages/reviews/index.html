@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <title>レビューを書く</title>
     <link rel="stylesheet" href="../../css/pages/reviews/style.css">
+
     <script>
+        const API_BASE = "http://localhost:8787";
+        const USER_ID = "demo-user-001"; // 実際はログイン情報から取得
+
         function setRating(r) {
             document.getElementById("rating").value = r;
 
@@ -12,8 +16,53 @@
                 document.getElementById("star" + i).textContent = i <= r ? "★" : "☆";
             }
         }
+
+        // レビュー送信処理
+        async function submitReview(event) {
+            event.preventDefault();
+
+            const gameId = document.getElementById("game-id").value;
+            const rating = parseInt(document.getElementById("rating").value);
+            const comment = document.getElementById("comment").value;
+
+            if (!rating || rating < 1 || rating > 5) {
+                alert("評価を選択してください（1〜5）");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/reviews`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        game_id: Number(gameId),
+                        user_id: USER_ID,
+                        rating: rating,
+                        comment: comment
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    alert(`投稿失敗: ${result.error}`);
+                    return;
+                }
+
+                alert("レビューを投稿しました！");
+                // 必要なら別ページへ遷移
+                // location.href = "/pages/games/detail.html?id=" + gameId;
+
+            } catch (error) {
+                console.error(error);
+                alert("エラーが発生しました");
+            }
+        }
     </script>
 </head>
+
 <body>
 
 <div class="container">
@@ -32,10 +81,12 @@
         <div class="right">
             <h3>レビュー投稿フォーム</h3>
 
-            <form action="submit.php" method="POST">
+            <!-- ★ PHP送信をやめて onsubmit を使用 -->
+            <form onsubmit="submitReview(event)">
 
-                <label>ゲーム名</label>
-                <input type="text" name="game" required>
+                <!-- 実際は URL パラメータなどから入れる -->
+                <label>ゲームID</label>
+                <input type="number" id="game-id" value="1" required>
 
                 <label>評価（1〜5）</label>
                 <div class="stars">
@@ -45,10 +96,10 @@
                     <span id="star4" onclick="setRating(4)">☆</span>
                     <span id="star5" onclick="setRating(5)">☆</span>
                 </div>
-                <input type="hidden" id="rating" name="rating" value="0">
+                <input type="hidden" id="rating" value="0">
 
                 <label>コメント</label>
-                <textarea name="comment" rows="5" required></textarea>
+                <textarea id="comment" rows="5" required></textarea>
 
                 <button type="submit">送信する</button>
 
@@ -60,4 +111,3 @@
 
 </body>
 </html>
-
