@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>レビューを書く</title>
-    <link rel="stylesheet" href="/css/pages/reviews/style.css">
+    <link rel="stylesheet" href="/css/pages/reviews/style.css" />
     <script>
-        function setRating(r) {
-            document.getElementById("rating").value = r;
+      function setRating(r) {
+        document.getElementById("rating").value = r;
 
-            for (let i = 1; i <= 5; i++) {
-                document.getElementById("star" + i).textContent = i <= r ? "★" : "☆";
-            }
+        for (let i = 1; i <= 5; i++) {
+          document.getElementById("star" + i).textContent = i <= r ? "★" : "☆";
         }
+      }
     </script>
-</head>
-<body>
-
-<div class="container">
-
-    <div class="title-box">
+  </head>
+  <body>
+    <div class="container">
+      <div class="title-box">
         <h2>レビューを書く</h2>
         <p>ゲームの評価とコメントを入力してください。</p>
-    </div>
+      </div>
 
-    <div class="content">
-
+      <div class="content">
         <div class="left">
-            <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70" alt="">
+          <img
+            src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70"
+            alt=""
+          />
         </div>
 
         <div class="right">
-            <h3>レビュー投稿フォーム</h3>
+          <h3>レビュー投稿フォーム</h3>
 
-            <form action="submit.php" method="POST">
+          <form action="submit.php" method="POST">
+            <label>ゲーム名</label>
+            <input type="text" name="game" required />
 
-                <label>ゲーム名</label>
-                <input type="text" name="game" required>
+            <label>評価（1〜5）</label>
+            <div class="stars">
+              <span id="star1" onclick="setRating(1)">☆</span>
+              <span id="star2" onclick="setRating(2)">☆</span>
+              <span id="star3" onclick="setRating(3)">☆</span>
+              <span id="star4" onclick="setRating(4)">☆</span>
+              <span id="star5" onclick="setRating(5)">☆</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" value="0" />
 
-                <label>評価（1〜5）</label>
-                <div class="stars">
-                    <span id="star1" onclick="setRating(1)">☆</span>
-                    <span id="star2" onclick="setRating(2)">☆</span>
-                    <span id="star3" onclick="setRating(3)">☆</span>
-                    <span id="star4" onclick="setRating(4)">☆</span>
-                    <span id="star5" onclick="setRating(5)">☆</span>
-                </div>
-                <input type="hidden" id="rating" name="rating" value="0">
+            <label>コメント</label>
+            <textarea name="comment" rows="5" required></textarea>
 
-                <label>コメント</label>
-                <textarea name="comment" rows="5" required></textarea>
-
-                <button type="submit">送信する</button>
-
-            </form>
+            <button type="submit">送信する</button>
+          </form>
         </div>
-
+      </div>
     </div>
-</div>
-
-</body>
+  </body>
 </html>
-
