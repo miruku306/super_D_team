@@ -11,40 +11,47 @@ body {
   line-height: 1.7;
 }
 
-/* ===== Header ===== */
-.header {
-  background: #fff;
-  border-bottom: 1px solid #eee;
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+header nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+.reserve-btn {
+    padding: 8px 18px;
+    background: #704125;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
 }
 
-.header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← アイコンと文字の間隔 */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 20px 30px;
 }
 
-.nav a {
-  margin-right: 24px;
-  text-decoration: none;
-  color: #555;
-  font-size: 14px;
-}
-
-.nav a.active {
-  color: #8b5e3c;
-  font-weight: bold;
-}
-
-.btn-reserve {
-  background: #8b5e3c;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 14px;
+.logo-icon {
+    width: 100px;   /* アイコンのサイズ調整 */
+    height: 100px;  /* 好みに合わせて変更可能 */
+    object-fit: contain;
 }
 
 /* ===== Main ===== */
@@ -88,40 +95,28 @@ body {
   margin-bottom: 8px;
 }
 
-/* ===== Footer ===== */
-.footer {
-  background: #fff;
-  border-top: 1px solid #eee;
-  padding: 40px 24px 24px;
+/* Footer */
+footer {
+    background: #f6f6f6;
+    padding: 50px 10%;
+    font-size: 13px;
 }
-
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto 24px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
+footer .columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
-
-.footer-column h3 {
-  font-size: 14px;
-  margin-bottom: 12px;
+footer a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    margin: 3px 0;
 }
-
-.footer-column a {
-  display: block;
-  font-size: 13px;
-  color: #666;
-  text-decoration: none;
-  margin-bottom: 8px;
-}
-
-.footer-column a:hover {
-  color: #8b5e3c;
-}
-
-.copyright {
-  text-align: center;
-  font-size: 12px;
-  color: #999;
+footer .copyright {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #777;
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
 }
