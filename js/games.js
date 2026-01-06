@@ -7,7 +7,6 @@ let currentFilters = {
   playerCount: null,
   playTime: "all",
   genres: [],
-  searchQuery: "",
 };
 
 // ページ読み込み時の初期化
@@ -120,15 +119,6 @@ function createGameCard(game) {
  * フィルターの初期化
  */
 function initializeFilters() {
-  // 検索バー
-  const searchInput = document.getElementById("game-search");
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      currentFilters.searchQuery = e.target.value.trim();
-      applyFilters();
-    });
-  }
-
   // プレイ人数スライダー
   const playerRangeInput = document.querySelector(
     '.filter-section input[type="range"]'
@@ -286,18 +276,6 @@ function applyFilters() {
     // ジャンルフィルター
     if (currentFilters.genres.length > 0) {
       if (!currentFilters.genres.includes(game.genre)) {
-        return false;
-      }
-    }
-
-    // 検索クエリフィルター
-    if (currentFilters.searchQuery) {
-      const query = currentFilters.searchQuery.toLowerCase();
-      const titleMatch = game.title.toLowerCase().includes(query);
-      const descMatch = game.description
-        ? game.description.toLowerCase().includes(query)
-        : false;
-      if (!titleMatch && !descMatch) {
         return false;
       }
     }
