@@ -19,6 +19,8 @@ export interface Database {
           description: string | null;
           player_min: number;
           player_max: number;
+          play_time: number | null;
+          genre: string | null;
           image_url: string | null;
           stock: number;
           created_at: string;
@@ -29,6 +31,8 @@ export interface Database {
           description?: string | null;
           player_min: number;
           player_max: number;
+          play_time?: number | null;
+          genre?: string | null;
           image_url?: string | null;
           stock?: number;
           created_at?: string;
@@ -39,6 +43,8 @@ export interface Database {
           description?: string | null;
           player_min?: number;
           player_max?: number;
+          play_time?: number | null;
+          genre?: string | null;
           image_url?: string | null;
           stock?: number;
           created_at?: string;
