@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.7;
+}
+
+/* ===== Header ===== */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav a {
+  margin-right: 24px;
+  text-decoration: none;
+  color: #555;
+  font-size: 14px;
+}
+
+.nav a.active {
+  color: #8b5e3c;
+  font-weight: bold;
+}
+
+.btn-reserve {
+  background: #8b5e3c;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* ===== Main ===== */
+.container {
+  max-width: 900px;
+  margin: 48px auto;
+  padding: 0 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.page-description {
+  text-align: center;
+  color: #666;
+  margin-bottom: 48px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #8b5e3c;
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+.card li {
+  margin-bottom: 8px;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 40px 24px 24px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.footer-column h3 {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.footer-column a {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+  color: #8b5e3c;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
