@@ -141,13 +141,13 @@ input[type="range"] {
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .game-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .game-image {
@@ -158,12 +158,36 @@ input[type="range"] {
     justify-content: center;
     overflow: hidden;
     background-color: #e0e0e0;
+    position: relative;
 }
 
 .game-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.game-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #8b6f47 0%, #6d5738 100%);
+    color: white;
+    font-size: 3rem;
+    gap: 0.5rem;
+}
+
+.game-image-placeholder .icon {
+    font-size: 4rem;
+    opacity: 0.8;
+}
+
+.game-image-placeholder .text {
+    font-size: 0.9rem;
+    opacity: 0.7;
 }
 
 .game-info {
