@@ -159,6 +159,7 @@ footer .copyright {
     margin-top: 30px;
 }
 
+
 /* レスポンシブ */
 @media (max-width:700px) {
   .grid-2 { grid-template-columns:1fr; }

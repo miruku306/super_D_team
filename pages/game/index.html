@@ -4,20 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ボードゲームカタログ</title>
-    <link rel="stylesheet" href="/css/pages/game/style.css" />
-    <script src="/js/games.js" defer></script>
+    <link rel="stylesheet" href="../../css/pages/game/style.css" />
   </head>
   <body>
     <header>
+      <div class="logo">
+        <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
+        負けても泣かない大人の社交場
+      </div>
       <nav>
-        <div class="logo"></div>
-        <a href="/">Home</a>
-        <a href="/pages/game/index.html">Menu & Games</a>
-        <a href="/pages/reviews/index.html">Reviews</a>
-        <a href="/pages/rentals/index.html" class="reserve-btn"
-          >📅 テーブルを予約</a
-        >
+        <a href="../game/index.html">メニュー＆ゲーム</a>
+        <a href="../reviews/index.html">レビュー</a>
+        <a href="../access/index.html">交通アクセス</a>
       </nav>
+      <a class="reserve-btn" href="../rentals/index.html">予約する</a>
     </header>
 
     <div class="container">
@@ -63,44 +63,144 @@
       <main class="main-content">
         <h1>ボードゲームカタログ</h1>
         <div class="game-grid">
-          <!-- ゲームカードはJavaScriptで動的に生成されます -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="../../img/catan.jpg" alt="カタンの開拓者たち" />
+            </div>
+            <div class="game-info">
+              <h3 class="game-title">カタンの開拓者たち</h3>
+              <p class="game-description">
+                無人島を舞台に、資源を集めて島の開拓を広げる戦略ゲーム。交渉と運が鍵。
+              </p>
+              <div class="game-meta">
+                <span>👥 3-4人</span>
+                <span>⏱️ 60-90分</span>
+                <span>🎯 戦略</span>
+              </div>
+              <span class="availability in-use">貸出中: 中</span>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-image">
+              <img src="../../img/carcassonne.jpg" alt="カルカソンヌ" />
+            </div>
+            <div class="game-info">
+              <h3 class="game-title">カルカソンヌ</h3>
+              <p class="game-description">
+                タイルを配置して街を広げ、道を繋ぎ、修道院を建てる。手軽に楽しめるタイル配置ゲーム。
+              </p>
+              <div class="game-meta">
+                <span>👥 2-5人</span>
+                <span>⏱️ 30-45分</span>
+                <span>🎯 タイル配置</span>
+              </div>
+              <span class="availability available">貸出可: 易</span>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-image">
+              <img src="../../img/dominion.jpg" alt="ドミニオン" />
+            </div>
+            <div class="game-info">
+              <h3 class="game-title">ドミニオン</h3>
+              <p class="game-description">
+                デッキ構築型カードゲームの金字塔。毎回異なる戦略が求められる奥深さ。
+              </p>
+              <div class="game-meta">
+                <span>👥 2-4人</span>
+                <span>⏱️ 30分</span>
+                <span>🎯 デッキ構築</span>
+              </div>
+              <span class="availability in-use">貸出中: 中</span>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-image">
+              <img
+                src="../../img/ticket-to-ride.jpg"
+                alt="チケット・トゥ・ライド"
+              />
+            </div>
+            <div class="game-info">
+              <h3 class="game-title">チケット・トゥ・ライド</h3>
+              <p class="game-description">
+                列車カードを集めて都市間に線路を繋ぐ、家族で楽しめる人気ボードゲーム。
+              </p>
+              <div class="game-meta">
+                <span>👥 2-5人</span>
+                <span>⏱️ 30-60分</span>
+                <span>🎯 鉄道</span>
+              </div>
+              <span class="availability available">貸出可: 易</span>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-image">
+              <img src="../../img/pandemic.jpg" alt="パンデミック" />
+            </div>
+            <div class="game-info">
+              <h3 class="game-title">パンデミック</h3>
+              <p class="game-description">
+                世界的な疫病の拡大を防ぐ協力型ゲーム。チームワークが勝利の鍵。
+              </p>
+              <div class="game-meta">
+                <span>👥 2-4人</span>
+                <span>⏱️ 45分</span>
+                <span>🎯 協力</span>
+              </div>
+              <span class="availability available">貸出可: 易</span>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-image">
+              <img src="../../img/agricola.jpg" alt="アグリコラ" />
+            </div>
+            <div class="game-info">
+              <h3 class="game-title">アグリコラ</h3>
+              <p class="game-description">
+                農場を発展させる本格的ワーカープレースメント。やり込み要素満載。
+              </p>
+              <div class="game-meta">
+                <span>👥 1-4人</span>
+                <span>⏱️ 90-120分</span>
+                <span>🎯 戦略</span>
+              </div>
+              <span class="availability in-use">貸出中: 中</span>
+            </div>
+          </div>
         </div>
       </main>
     </div>
 
     <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Explore</h4>
-          <p><a href="#home">Home</a></p>
-          <p><a href="#menu">Menu & Games</a></p>
-          <p><a href="#reservations">Reservations</a></p>
+      <div class="columns">
+        <div>
+          <p><strong>Discover a world of strategy and fun.</strong></p>
         </div>
-        <div class="footer-section">
-          <h4>Resources</h4>
-          <p><a href="#access">Access & Contact</a></p>
-          <p><a href="#privacy">Privacy Policy</a></p>
-          <p><a href="#terms">Terms of Service</a></p>
+        <div>
+          <strong>Explore</strong>
+          <a href="/">ホーム</a>
+          <a href="../game/index.html">メニュー＆ゲーム</a>
+          <a href="../rentals/index.html">予約</a>
         </div>
-        <div class="footer-section">
-          <h4>Support</h4>
-          <p><a href="#faq">FAQ</a></p>
-          <p><a href="#help">Help Center</a></p>
+        <div>
+          <strong>Resources</strong>
+          <a href="../reviews/index.html">レビュー</a>
+          <a href="../access/index.html">交通アクセス</a>
+          <a href="../regulations/index.html">利用規約</a>
         </div>
-        <div class="footer-section">
-          <h4>Contact Us</h4>
+        <div>
+          <strong>Contact Us</strong>
           <p>123 Game Lane, Boardville, BG 54321</p>
-          <p>Email: info@boardgamecafeofficialsite.com</p>
-          <p>Phone: (123) 456-7890</p>
-          <div class="social-links">
-            <a href="#facebook">f</a>
-            <a href="#twitter">t</a>
-            <a href="#instagram">i</a>
-            <a href="#youtube">y</a>
-          </div>
+          <p>Email: info@boardgamecafe.com</p>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="copyright">
         © 2025 Board Game Cafe Official Site. All rights reserved.
       </div>
     </footer>
