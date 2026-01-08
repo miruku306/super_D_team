@@ -117,6 +117,43 @@ input[type="range"] {
     margin-bottom: 0.5rem;
 }
 
+/* プレイ人数チップ */
+.player-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.player-chip {
+    appearance: none;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    user-select: none;
+}
+
+.player-chip:hover {
+    border-color: #b9b9b9;
+}
+
+.player-chip.is-active,
+.player-chip[aria-pressed="true"] {
+    background: #704125;
+    border-color: #704125;
+    color: #fff;
+}
+
+.player-chip:focus-visible {
+    outline: 3px solid rgba(112, 65, 37, 0.35);
+    outline-offset: 2px;
+}
+
 /* メインコンテンツ */
 .main-content {
     background-color: #fff;
