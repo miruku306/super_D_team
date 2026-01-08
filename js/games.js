@@ -182,23 +182,6 @@ function initializeFilters() {
       applyFilters();
     });
   });
-
-  // カテゴリーチェックボックス（ボードゲームのみ表示）
-  const categoryCheckboxes = document.querySelectorAll(
-    '#category-filter input[type="checkbox"]'
-  );
-  categoryCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      // ボードゲームのチェックボックスが外れた場合は何も表示しない
-      const boardGameCheckbox = categoryCheckboxes[2]; // 3番目がボードゲーム
-      if (boardGameCheckbox && !boardGameCheckbox.checked) {
-        filteredGames = [];
-        renderGames(filteredGames);
-      } else {
-        applyFilters();
-      }
-    });
-  });
 }
 
 /**
