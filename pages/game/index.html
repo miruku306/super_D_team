@@ -10,7 +10,7 @@
     <header>
       <div class="logo">
         <a href="../home/index.html">
-        <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
+          <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
         </a>
         負けても泣かない大人の社交場
       </div>
@@ -25,13 +25,16 @@
     <div class="container">
       <aside class="sidebar">
         <h3>カテゴリー</h3>
-        <div class="filter-section">
-          <label><input type="checkbox" /> ドリンク</label>
-          <label><input type="checkbox" /> フード</label>
-          <label><input type="checkbox" checked /> ボードゲーム</label>
+        <div class="filter-section" id="category-filter">
+          <label><input type="checkbox" value="drink" /> ドリンク</label>
+          <label><input type="checkbox" value="food" /> フード</label>
+          <label
+            ><input type="checkbox" value="boardgame" checked />
+            ボードゲーム</label
+          >
         </div>
 
-        <div class="filter-section">
+        <div class="filter-section" id="player-count-filter">
           <h4>ボードゲーム絞り込み</h4>
           <div class="player-range">
             <div class="range-labels">
@@ -42,23 +45,26 @@
           </div>
         </div>
 
-        <div class="filter-section">
+        <div class="filter-section" id="play-time-filter">
           <h4>プレイ時間 <span>▼</span></h4>
-          <label><input type="checkbox" checked /> 全て</label>
-          <label><input type="checkbox" /> 〜30</label>
-          <label><input type="checkbox" /> 30-60</label>
-          <label><input type="checkbox" /> 60分以上</label>
+          <label><input type="checkbox" value="all" checked /> 全て</label>
+          <label><input type="checkbox" value="lt30" /> 〜30</label>
+          <label><input type="checkbox" value="30to60" /> 30-60</label>
+          <label><input type="checkbox" value="gte60" /> 60分以上</label>
         </div>
 
-        <div class="filter-section">
+        <div class="filter-section" id="genre-filter">
           <h4>ジャンル <span>▼</span></h4>
-          <label><input type="checkbox" checked /> 全て</label>
-          <label><input type="checkbox" /> 戦略</label>
-          <label><input type="checkbox" /> タイル</label>
-          <label><input type="checkbox" /> 拡張子</label>
-          <label><input type="checkbox" /> 陣営</label>
-          <label><input type="checkbox" /> ワーカープレイス</label>
-          <label><input type="checkbox" /> 対戦ド</label>
+          <label><input type="checkbox" value="all" checked /> 全て</label>
+          <label><input type="checkbox" value="戦略" /> 戦略</label>
+          <label><input type="checkbox" value="タイル" /> タイル</label>
+          <label><input type="checkbox" value="拡張子" /> 拡張子</label>
+          <label><input type="checkbox" value="陣営" /> 陣営</label>
+          <label
+            ><input type="checkbox" value="ワーカープレイス" />
+            ワーカープレイス</label
+          >
+          <label><input type="checkbox" value="対戦ド" /> 対戦ド</label>
         </div>
       </aside>
 
@@ -206,5 +212,7 @@
         © 2025 Board Game Cafe Official Site. All rights reserved.
       </div>
     </footer>
+
+    <script src="../../js/games.js"></script>
   </body>
 </html>
