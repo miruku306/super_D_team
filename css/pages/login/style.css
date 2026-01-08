@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #ffffff; /* ← 白背景 */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background-color: #fff;
+  width: 350px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* 白背景用に少し控えめ */
+  text-align: center;
+}
+
+
+.login-container h1 {
+  margin-bottom: 5px;
+  color: #6b4f4f;
+}
+
+.subtitle {
+  margin-bottom: 25px;
+  color: #777;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.login-form label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.login-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #a47148;
+}
+
+.login-form button {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #6b4f4f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #5a3f3f;
+}
+
+.footer-text {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+.footer-text a {
+  color: #a47148;
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
