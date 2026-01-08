@@ -5,7 +5,7 @@ let allGames = [];
 let filteredGames = [];
 let currentFilters = {
   playerCount: null,
-  playTime: "all",
+  playTime: ["all"],
   genres: [],
 };
 
@@ -121,7 +121,7 @@ function createGameCard(game) {
 function initializeFilters() {
   // プレイ人数スライダー
   const playerRangeInput = document.querySelector(
-    '.filter-section input[type="range"]'
+    '#player-count-filter input[type="range"]'
   );
   if (playerRangeInput) {
     playerRangeInput.addEventListener("input", (e) => {
@@ -132,7 +132,7 @@ function initializeFilters() {
 
   // プレイ時間チェックボックス
   const playTimeCheckboxes = document.querySelectorAll(
-    '.filter-section:nth-child(3) input[type="checkbox"]'
+    '#play-time-filter input[type="checkbox"]'
   );
   playTimeCheckboxes.forEach((checkbox, index) => {
     checkbox.addEventListener("change", () => {
@@ -143,7 +143,7 @@ function initializeFilters() {
           playTimeCheckboxes.forEach((cb, i) => {
             if (i !== 0) cb.checked = false;
           });
-          currentFilters.playTime = "all";
+          currentFilters.playTime = ["all"];
         } else {
           // 「全て」のチェックを外そうとした場合は外させない
           checkbox.checked = true;
@@ -162,7 +162,7 @@ function initializeFilters() {
 
   // ジャンルチェックボックス
   const genreCheckboxes = document.querySelectorAll(
-    '.filter-section:nth-child(4) input[type="checkbox"]'
+    '#genre-filter input[type="checkbox"]'
   );
   genreCheckboxes.forEach((checkbox, index) => {
     checkbox.addEventListener("change", () => {
@@ -185,7 +185,7 @@ function initializeFilters() {
 
   // カテゴリーチェックボックス（ボードゲームのみ表示）
   const categoryCheckboxes = document.querySelectorAll(
-    '.filter-section:first-child input[type="checkbox"]'
+    '#category-filter input[type="checkbox"]'
   );
   categoryCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
@@ -206,20 +206,20 @@ function initializeFilters() {
  */
 function updatePlayTimeFilter() {
   const playTimeCheckboxes = document.querySelectorAll(
-    '.filter-section:nth-child(3) input[type="checkbox"]'
+    '#play-time-filter input[type="checkbox"]'
   );
 
-  const checkedBoxes = Array.from(playTimeCheckboxes)
+  const checkedValues = Array.from(playTimeCheckboxes)
     .slice(1) // 「全て」を除外
-    .map((cb, index) => (cb.checked ? index : -1))
-    .filter((i) => i !== -1);
+    .filter((cb) => cb.checked)
+    .map((cb) => cb.value);
 
   // チェックされているボックスがあればそれを設定、なければ「全て」に戻す
-  if (checkedBoxes.length === 0) {
-    currentFilters.playTime = "all";
+  if (checkedValues.length === 0) {
+    currentFilters.playTime = ["all"];
     playTimeCheckboxes[0].checked = true;
   } else {
-    currentFilters.playTime = checkedBoxes;
+    currentFilters.playTime = checkedValues;
   }
 }
 
@@ -228,21 +228,12 @@ function updatePlayTimeFilter() {
  */
 function updateGenreFilter() {
   const genreCheckboxes = document.querySelectorAll(
-    '.filter-section:nth-child(4) input[type="checkbox"]'
+    '#genre-filter input[type="checkbox"]'
   );
-  const genreLabels = [
-    "戦略",
-    "タイル",
-    "拡張子",
-    "陣営",
-    "ワーカープレイス",
-    "対戦ド",
-  ];
-
   currentFilters.genres = Array.from(genreCheckboxes)
     .slice(1) // 「全て」を除外
-    .map((cb, index) => (cb.checked ? genreLabels[index] : null))
-    .filter((genre) => genre !== null);
+    .filter((cb) => cb.checked)
+    .map((cb) => cb.value);
 
   if (currentFilters.genres.length === 0) {
     genreCheckboxes[0].checked = true;
@@ -265,7 +256,7 @@ function applyFilters() {
     }
 
     // プレイ時間フィルター
-    if (currentFilters.playTime !== "all") {
+    if (!currentFilters.playTime.includes("all")) {
       const playTime = game.play_time;
 
       // play_timeがnullまたはundefinedの場合はフィルタリングしない
@@ -275,22 +266,17 @@ function applyFilters() {
 
       let matchesTime = false;
 
-      if (Array.isArray(currentFilters.playTime)) {
-        currentFilters.playTime.forEach((timeIndex) => {
-          // 0: 〜30分 (30分未満)
-          if (timeIndex === 0 && playTime < 30) {
-            matchesTime = true;
-          }
-          // 1: 30-60分 (30分以上60分未満)
-          if (timeIndex === 1 && playTime >= 30 && playTime < 60) {
-            matchesTime = true;
-          }
-          // 2: 60分以上
-          if (timeIndex === 2 && playTime >= 60) {
-            matchesTime = true;
-          }
-        });
-      }
+      currentFilters.playTime.forEach((timeValue) => {
+        if (timeValue === "lt30" && playTime <= 30) {
+          matchesTime = true;
+        }
+        if (timeValue === "30to60" && playTime > 30 && playTime < 60) {
+          matchesTime = true;
+        }
+        if (timeValue === "gte60" && playTime >= 60) {
+          matchesTime = true;
+        }
+      });
 
       if (!matchesTime) {
         return false;
