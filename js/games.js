@@ -36,8 +36,6 @@ async function loadGames() {
     allGames = await response.json();
     filteredGames = [...allGames];
 
-    console.log("読み込まれたゲーム:", allGames);
-
     renderGames(filteredGames);
   } catch (error) {
     console.error("ゲーム読み込みエラー:", error);
@@ -50,7 +48,9 @@ async function loadGames() {
  */
 function renderGames(games) {
   const gameGrid = document.querySelector(".game-grid");
-  if (!gameGrid) return;
+  if (!gameGrid) {
+    return;
+  }
 
   // グリッドをクリア
   gameGrid.innerHTML = "";
@@ -137,18 +137,25 @@ function initializeFilters() {
   playTimeCheckboxes.forEach((checkbox, index) => {
     checkbox.addEventListener("change", () => {
       // 「全て」が選択された場合
-      if (index === 0 && checkbox.checked) {
-        playTimeCheckboxes.forEach((cb, i) => {
-          if (i !== 0) cb.checked = false;
-        });
-        currentFilters.playTime = "all";
-      } else if (checkbox.checked) {
-        // 他のチェックボックスが選択された場合、「全て」を外す
+      if (index === 0) {
+        if (checkbox.checked) {
+          // 「全て」をチェック → 他を全て外す
+          playTimeCheckboxes.forEach((cb, i) => {
+            if (i !== 0) cb.checked = false;
+          });
+          currentFilters.playTime = "all";
+        } else {
+          // 「全て」のチェックを外そうとした場合は外させない
+          checkbox.checked = true;
+          return;
+        }
+      } else {
+        // 他のチェックボックスが操作された場合
+        // 「全て」を外す
         playTimeCheckboxes[0].checked = false;
         updatePlayTimeFilter();
-      } else {
-        updatePlayTimeFilter();
       }
+
       applyFilters();
     });
   });
@@ -207,6 +214,7 @@ function updatePlayTimeFilter() {
     .map((cb, index) => (cb.checked ? index : -1))
     .filter((i) => i !== -1);
 
+  // チェックされているボックスがあればそれを設定、なければ「全て」に戻す
   if (checkedBoxes.length === 0) {
     currentFilters.playTime = "all";
     playTimeCheckboxes[0].checked = true;
@@ -259,18 +267,34 @@ function applyFilters() {
     // プレイ時間フィルター
     if (currentFilters.playTime !== "all") {
       const playTime = game.play_time;
+
+      // play_timeがnullまたはundefinedの場合はフィルタリングしない
+      if (!playTime) {
+        return true;
+      }
+
       let matchesTime = false;
 
       if (Array.isArray(currentFilters.playTime)) {
         currentFilters.playTime.forEach((timeIndex) => {
-          if (timeIndex === 0 && playTime <= 30) matchesTime = true;
-          if (timeIndex === 1 && playTime > 30 && playTime <= 60)
+          // 0: 〜30分 (30分未満)
+          if (timeIndex === 0 && playTime < 30) {
             matchesTime = true;
-          if (timeIndex === 2 && playTime > 60) matchesTime = true;
+          }
+          // 1: 30-60分 (30分以上60分未満)
+          if (timeIndex === 1 && playTime >= 30 && playTime < 60) {
+            matchesTime = true;
+          }
+          // 2: 60分以上
+          if (timeIndex === 2 && playTime >= 60) {
+            matchesTime = true;
+          }
         });
       }
 
-      if (!matchesTime) return false;
+      if (!matchesTime) {
+        return false;
+      }
     }
 
     // ジャンルフィルター
