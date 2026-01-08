@@ -4,7 +4,7 @@ const API_BASE_URL = "http://localhost:8787/api";
 let allGames = [];
 let filteredGames = [];
 let currentFilters = {
-  playerCount: null,
+  playerCounts: ["all"], // "all" | number | "5plus"
   playTime: ["all"],
   genres: [],
 };
@@ -119,14 +119,46 @@ function createGameCard(game) {
  * フィルターの初期化
  */
 function initializeFilters() {
-  // プレイ人数スライダー
-  const playerRangeInput = document.querySelector(
-    '#player-count-filter input[type="range"]'
+  // プレイ人数（チップ）
+  const playerChips = document.querySelectorAll(
+    "#player-count-filter .player-chip"
   );
-  if (playerRangeInput) {
-    playerRangeInput.addEventListener("input", (e) => {
-      currentFilters.playerCount = parseInt(e.target.value);
-      applyFilters();
+  if (playerChips.length > 0) {
+    playerChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const value = chip.dataset.player;
+        if (!value) return;
+
+        // 「全て」は排他的に扱う
+        if (value === "all") {
+          setOnlyAllPlayerChipSelected(playerChips);
+          currentFilters.playerCounts = ["all"];
+          applyFilters();
+          return;
+        }
+
+        // 個別チップのトグル
+        toggleChipActive(chip);
+
+        // 「全て」をOFF（個別が1つでも選ばれたら）
+        const allChip = document.querySelector(
+          '#player-count-filter .player-chip[data-player="all"]'
+        );
+        if (allChip) {
+          setChipActive(allChip, false);
+        }
+
+        // 個別が0件になったら「全て」に戻す
+        const selected = getSelectedPlayerChipValues(playerChips);
+        if (selected.length === 0) {
+          setOnlyAllPlayerChipSelected(playerChips);
+          currentFilters.playerCounts = ["all"];
+        } else {
+          currentFilters.playerCounts = selected;
+        }
+
+        applyFilters();
+      });
     });
   }
 
@@ -185,6 +217,36 @@ function initializeFilters() {
 }
 
 /**
+ * チップのON/OFF状態制御
+ */
+function setChipActive(chip, active) {
+  chip.classList.toggle("is-active", active);
+  chip.setAttribute("aria-pressed", active ? "true" : "false");
+}
+
+function toggleChipActive(chip) {
+  const active = chip.getAttribute("aria-pressed") === "true";
+  setChipActive(chip, !active);
+}
+
+function setOnlyAllPlayerChipSelected(playerChips) {
+  playerChips.forEach((chip) => {
+    const value = chip.dataset.player;
+    setChipActive(chip, value === "all");
+  });
+}
+
+function getSelectedPlayerChipValues(playerChips) {
+  return Array.from(playerChips)
+    .filter((chip) => chip.dataset.player !== "all")
+    .filter((chip) => chip.getAttribute("aria-pressed") === "true")
+    .map((chip) => chip.dataset.player)
+    .filter(Boolean)
+    .map((v) => (v === "5plus" ? "5plus" : parseInt(v, 10)))
+    .filter((v) => v === "5plus" || Number.isFinite(v));
+}
+
+/**
  * プレイ時間フィルターを更新
  */
 function updatePlayTimeFilter() {
@@ -229,11 +291,23 @@ function updateGenreFilter() {
 function applyFilters() {
   filteredGames = allGames.filter((game) => {
     // プレイ人数フィルター
-    if (currentFilters.playerCount) {
-      if (
-        game.player_min > currentFilters.playerCount ||
-        game.player_max < currentFilters.playerCount
-      ) {
+    if (!currentFilters.playerCounts.includes("all")) {
+      const min = parseInt(game.player_min, 10);
+      const max = parseInt(game.player_max, 10);
+
+      // データ欠損時は人数フィルターしない（他条件は適用）
+      if (!Number.isFinite(min) || !Number.isFinite(max)) {
+        return true;
+      }
+
+      const matchesAny = currentFilters.playerCounts.some((selected) => {
+        if (selected === "5plus") {
+          return max >= 5;
+        }
+        return min <= selected && max >= selected;
+      });
+
+      if (!matchesAny) {
         return false;
       }
     }

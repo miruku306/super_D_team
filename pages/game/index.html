@@ -25,13 +25,50 @@
     <div class="container">
       <aside class="sidebar">
         <div class="filter-section" id="player-count-filter">
-          <h4>ボードゲーム絞り込み</h4>
-          <div class="player-range">
-            <div class="range-labels">
-              <span>2人</span>
-              <span>4人</span>
-            </div>
-            <input type="range" min="2" max="4" value="3" />
+          <h3>ボードゲーム絞り込み</h3>
+          <h4>プレイ人数</h4>
+          <div class="player-chips" role="group" aria-label="プレイ人数">
+            <button
+              type="button"
+              class="player-chip is-active"
+              data-player="all"
+              aria-pressed="true"
+            >
+              全て
+            </button>
+            <button
+              type="button"
+              class="player-chip"
+              data-player="2"
+              aria-pressed="false"
+            >
+              2人
+            </button>
+            <button
+              type="button"
+              class="player-chip"
+              data-player="3"
+              aria-pressed="false"
+            >
+              3人
+            </button>
+            <button
+              type="button"
+              class="player-chip"
+              data-player="4"
+              aria-pressed="false"
+            >
+              4人
+            </button>
+            <button
+              type="button"
+              class="player-chip"
+              data-player="5plus"
+              aria-pressed="false"
+              title="最大人数が5以上のゲーム"
+            >
+              5人+
+            </button>
           </div>
         </div>
 
