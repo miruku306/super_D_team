@@ -5,6 +5,13 @@ type Review = Database["public"]["Tables"]["reviews"]["Row"];
 type ReviewInsert = Database["public"]["Tables"]["reviews"]["Insert"];
 type ReviewUpdate = Database["public"]["Tables"]["reviews"]["Update"];
 
+type GuestReviewCreateParams = {
+  gameId: number;
+  rating: number;
+  comment?: string | null;
+  guestName?: string | null;
+};
+
 /**
  * 特定のゲームのレビューを取得
  */
@@ -104,6 +111,43 @@ export async function createReview(review: ReviewInsert) {
   }
 
   return data;
+}
+
+/**
+ * ゲストでレビューを投稿
+ */
+export async function createGuestReview(params: GuestReviewCreateParams) {
+  const { gameId, rating, comment, guestName } = params;
+
+  if (!Number.isFinite(gameId)) {
+    throw new Error("gameIdを指定してください");
+  }
+
+  if (rating < 1 || rating > 5) {
+    throw new Error("評価は1〜5の範囲で指定してください");
+  }
+
+  const { data, error } = await (supabase as any).rpc(
+    "create_simple_guest_review",
+    {
+      p_game_id: gameId,
+      p_guest_email: null,
+      p_rating: rating,
+      p_comment: comment ?? null,
+      p_guest_name: guestName ?? null,
+    } as any
+  );
+
+  if (error) {
+    throw new Error(`レビューの投稿に失敗しました: ${error.message}`);
+  }
+
+  const result = data as any;
+  if (result?.success === false) {
+    throw new Error(result?.error || "レビューの投稿に失敗しました");
+  }
+
+  return result;
 }
 
 /**
