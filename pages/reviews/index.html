@@ -18,7 +18,7 @@
     <header>
       <div class="logo">
         <a href="../home/index.html">
-        <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
+          <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
         </a>
         負けても泣かない大人の社交場
       </div>
@@ -33,7 +33,9 @@
     <div class="container">
       <div class="title-box">
         <h2>レビューを書く</h2>
-        <p>ゲームの評価とコメントを入力してください。</p>
+        <p>
+          ゲームを選んで、評価とコメントを投稿してください。匿名でもOKです！
+        </p>
       </div>
 
       <div class="content">
@@ -47,9 +49,20 @@
         <div class="right">
           <h3>レビュー投稿フォーム</h3>
 
-          <form action="submit.php" method="POST">
-            <label>ゲーム名</label>
-            <input type="text" name="game" required />
+          <form id="review-form" autocomplete="off">
+            <label>ゲームを選択</label>
+            <select name="game_id" id="game-select" required>
+              <option value="">— ゲームを選択 —</option>
+              <!-- ゲーム一覧は動的に読み込まれます -->
+            </select>
+
+            <label>ニックネーム（任意・レビューに表示されます）</label>
+            <input
+              type="text"
+              name="guest_name"
+              placeholder="例：ボドゲ好き太郎"
+              maxlength="50"
+            />
 
             <label>評価（1〜5）</label>
             <div class="stars">
@@ -66,6 +79,12 @@
 
             <button type="submit">送信する</button>
           </form>
+
+          <div
+            id="review-result"
+            style="margin-top: 14px; display: none"
+            aria-live="polite"
+          ></div>
         </div>
       </div>
     </div>
@@ -97,6 +116,6 @@
         © 2025 Board Game Cafe Official Site. All rights reserved.
       </div>
     </footer>
-    
+    <script src="../../js/reviews.js"></script>
   </body>
 </html>
