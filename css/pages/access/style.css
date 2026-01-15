@@ -1,3 +1,6 @@
+/* ================================
+   共通設定
+================================ */
 body {
   margin: 0;
   font-family: "Noto Sans JP", sans-serif;
@@ -10,51 +13,51 @@ a {
   color: #333;
 }
 
-/* ---------- ヘッダー ---------- */
-/* Header */
+/* ================================
+   ヘッダー
+================================ */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 30px;
-    font-size: 14px;
-    border-bottom: 1px solid #ddd;
-}
-header nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
-}
-.reserve-btn {
-    padding: 8px 18px;
-    background: #704125;
-    color: #fff;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 30px;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
 }
 
+header nav a {
+  margin: 0 15px;
+}
+
+.reserve-btn {
+  padding: 8px 18px;
+  background: #704125;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+/* ロゴ */
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* ← アイコンと文字の間隔 */
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 28px;
-    letter-spacing: 2px;
-    color: #333;
-    text-transform: uppercase;
-    margin: 0;
-    padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 2px;
+  padding: 20px 30px;
 }
 
 .logo-icon {
-    width: 100px;   /* アイコンのサイズ調整 */
-    height: 100px;  /* 好みに合わせて変更可能 */
-    object-fit: contain;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
-/* ---------- メイン ---------- */
+/* ================================
+   メイン
+================================ */
 main {
   max-width: 1100px;
   margin: 60px auto;
@@ -63,64 +66,62 @@ main {
 
 .page-title {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .page-title h1 {
   font-size: 32px;
-  margin-bottom: 10px;
 }
 
-.page-title p {
-  color: #777;
-  font-size: 14px;
+/* ================================
+   グールグルマップ
+================================ */
+
+
+.map-hero {
+  max-width: 1100px;     /* main と同じ幅 */
+  margin: 80px auto;     /* ← 中央寄せの決定打 */
+  padding: 0 20px;
 }
 
-.content {
-  display: flex;
-  gap: 40px;
+.map-hero iframe {
+  width: 100%;
+  height: 450px;         /* お好みで調整OK */
+  border: 0;
+  border-radius: 12px;
 }
 
-/* ---------- 左右 ---------- */
-.left, .right {
-  flex: 1;
-}
 
-/* Contact Wrapper */
+/* ================================
+   下部コンテンツ（左右）
+================================ */
 .contact-wrapper {
   display: flex;
   gap: 40px;
   align-items: flex-start;
 }
 
+/* 左：情報 */
 .contact-left {
   flex: 1;
 }
 
-.contact-left img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
+/* 右：フォーム */
 .contact-right {
   flex: 1;
   background: #fff;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
-.contact-right h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
+/* ================================
+   情報ボックス
+================================ */
 .info-box {
   background: #fff;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   border-left: 4px solid #704125;
 }
 
@@ -130,44 +131,27 @@ main {
   color: #704125;
 }
 
-.box, .form-box {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.box h3, .form-box h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.box p, .box li {
+.info-box p,
+.info-box li {
   font-size: 14px;
   line-height: 1.7;
-  color: #555;
 }
 
 ul {
   padding-left: 18px;
 }
 
-/* ---------- Google Map ---------- */
-iframe {
-  width: 100%;
-  height: 300px;
-  border: 0;
-  border-radius: 10px;
-}
-
-/* ---------- フォーム ---------- */
+/* ================================
+   フォーム
+================================ */
 label {
-  font-size: 14px;
-  margin-top: 10px;
   display: block;
+  font-size: 14px;
+  margin-top: 12px;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -182,7 +166,7 @@ textarea {
 }
 
 button {
-  margin-top: 15px;
+  margin-top: 20px;
   width: 100%;
   background: #8b5a3c;
   color: #fff;
@@ -197,55 +181,38 @@ button:hover {
   opacity: 0.9;
 }
 
-/* ---------- レスポンシブ ---------- */
-@media (max-width: 768px) {
-  .content {
-    flex-direction: column;
-
-    footer {
-  background: #fff;
-  border-top: 1px solid #eee;
-  margin-top: 80px;
-  padding: 40px;
-  font-size: 13px;
-  color: #777;
-  text-align: center;
-}
-
-  }
-
-}
-
-
-/* Footer */
+/* ================================
+   フッター
+================================ */
 footer {
-    background: #f6f6f6;
-    padding: 50px 10%;
-    font-size: 13px;
+  background: #f6f6f6;
+  padding: 50px 10%;
+  font-size: 13px;
 }
+
 footer .columns {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
+
 footer a {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    margin: 3px 0;
+  display: block;
+  margin: 3px 0;
 }
+
 footer .copyright {
-    text-align: center;
-    padding: 20px;
-    font-size: 12px;
-    color: #777;
-    border-top: 1px solid #ddd;
-    margin-top: 30px;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 12px;
+  color: #777;
+  border-top: 1px solid #ddd;
+  margin-top: 30px;
 }
 
-
-
-/* 背景オーバーレイ */
+/* ================================
+   モーダル
+================================ */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -253,20 +220,17 @@ footer .copyright {
   display: flex;
   align-items: center;
   justify-content: center;
-
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s ease;
   z-index: 9999;
 }
 
-/* 表示時 */
 .modal-overlay.show {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* モーダル本体 */
 .modal-box {
   background: #fff;
   padding: 40px 50px;
@@ -274,32 +238,33 @@ footer .copyright {
   text-align: center;
   max-width: 400px;
   width: 90%;
-
-  transform: scale(0.8);
+  transform: scale(0.7);
   opacity: 0;
-  transition: 
-    transform 0.5s ease,
-    opacity 0.5s ease;
+  transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-/* 表示時のアニメーション */
 .modal-overlay.show .modal-box {
   transform: scale(1);
   opacity: 1;
 }
 
-/* OKボタン */
 .modal-box button {
   margin-top: 25px;
   padding: 10px 30px;
-  border: none;
-  border-radius: 6px;
   background: #333;
   color: #fff;
-  font-size: 15px;
-  cursor: pointer;
+  border-radius: 6px;
 }
 
-.modal-box button:hover {
-  opacity: 0.8;
+/* ================================
+   レスポンシブ
+================================ */
+@media (max-width: 768px) {
+  .contact-wrapper {
+    flex-direction: column;
+  }
+
+  .map-area iframe {
+    height: 280px;
+  }
 }
