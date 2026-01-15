@@ -76,6 +76,28 @@ reviewsRoutes.post("/", async (c) => {
   return c.json(review, 201);
 });
 
+// POST /api/reviews/guest - ゲストレビュー投稿
+reviewsRoutes.post("/guest", async (c) => {
+  const body = await c.req.json();
+  const gameId = parseInt(body?.gameId ?? body?.game_id, 10);
+  const guestName = body?.guestName ?? body?.guest_name ?? null;
+  const rating = parseInt(body?.rating, 10);
+  const comment = body?.comment ?? null;
+
+  if (isNaN(gameId) || isNaN(rating)) {
+    return c.json({ error: "gameId と rating を指定してください" }, 400);
+  }
+
+  const result = await ReviewsService.createGuestReview({
+    gameId,
+    rating,
+    comment,
+    guestName: guestName ? String(guestName) : null,
+  });
+
+  return c.json(result, 201);
+});
+
 // PUT /api/reviews/:id - レビュー更新
 reviewsRoutes.put("/:id", async (c) => {
   const id = parseInt(c.req.param("id"), 10);
