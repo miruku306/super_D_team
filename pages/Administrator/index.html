@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ボードゲーム貸し出し管理</title>
+    <link rel="stylesheet" href="../../css/pages/administrator/style.css">
+</head>
+<body>
+
+<header>
+    <h1>ボードゲーム貸し出し管理者画面</h1>
+</header>
+
+<main>
+    <!-- ボードゲーム一覧 -->
+    <section class="card">
+        <h2>ボードゲーム一覧</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ゲーム名</th>
+                    <th>状態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>カタン</td>
+                    <td class="available">貸出可能</td>
+                    <td>
+                        <button class="btn edit">編集</button>
+                        <button class="btn delete">削除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>ドミニオン</td>
+                    <td class="rented">貸出中</td>
+                    <td>
+                        <button class="btn edit">編集</button>
+                        <button class="btn delete">削除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 貸し出し情報 -->
+    <section class="card">
+        <h2>現在の貸し出し状況</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ゲーム名</th>
+                    <th>借りた人</th>
+                    <th>貸出日</th>
+                    <th>返却予定日</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ドミニオン</td>
+                    <td>山田 太郎</td>
+                    <td>2026/01/01</td>
+                    <td>2026/01/08</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 Board Game Management</p>
+</footer>
+
+</body>
+</html>
+

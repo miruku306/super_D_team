@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アクセス＆お問い合わせ</title>
+  <link rel="stylesheet" href="../../css/pages/access/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <a href="../home/index.html">
+      <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
+    </a>
+    負けても泣かない大人の社交場
+  </div>
+  <nav>
+    <a href="../game/index.html">メニュー＆ゲーム</a>
+    <a href="../reviews/index.html">レビュー</a>
+    <a href="../access/index.html">交通アクセス</a>
+  </nav>
+    <a class="reserve-btn" href="../rentals/index.html">今すぐ予約</a>
+</header>      
+
+<main class="contact-page">
+
+  <h1 class="page-title">アクセス＆お問い合わせ</h1>
+  <p class="page-sub">
+  </p>
+
+  <div class="contact-wrapper">
+
+    <!-- 左側 -->
+    <div class="contact-left">
+      <img src="../../img/access.jpg" alt="アクセス画像">
+
+      <div class="info-box">
+        <h3>所在地</h3>
+        <p>〒151-0053 東京都渋谷区代々木2-1-1<br>新宿マインズタワーB1F</p>
+      </div>
+
+      <div class="info-box">
+        <h3>営業時間</h3>
+        <p>
+          月〜金：11:00 - 22:00<br>
+          土日：10:00 - 23:00<br>
+          祝日：10:00 - 22:00
+        </p>
+      </div>
+
+      <div class="info-box">
+        <h3>アクセス</h3>
+        <ul>
+          <li>新宿駅南口から徒歩3分</li>
+          <li>JR新宿駅新南改札から徒歩1分</li>
+          <li>地下駐車場完備（提携割引あり）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 右側（フォーム） -->
+    <div class="contact-right">
+
+      <h2>お問い合わせフォーム</h2>
+
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <label>お名前</label>
+        <input type="text" name="name" required>
+
+        <label>メールアドレス</label>
+        <input type="email" name="email" required>
+
+        <label>件名</label>
+        <input type="text" name="subject" required>
+
+        <label>お問い合わせ内容</label>
+        <textarea name="message" required></textarea>
+
+        <button type="submit">送信する</button>
+      </form>
+
+      <!-- モーダル背景 -->
+      <div id="modalOverlay" class="modal-overlay">
+
+      <!-- モーダル本体 -->
+      <div class="modal-box">
+      <p id="submitText"></p>
+      <button id="closeModal">OK</button>
+      </div>
+
+       
+
+      <script>
+        function handleSubmit(event) {
+         event.preventDefault();
+        const form = event.target;
+        const name = form.querySelector('input[name="name"]').value;
+
+        const overlay = document.getElementById("modalOverlay");
+        const text = document.getElementById("submitText");
+        const closeBtn = document.getElementById("closeModal");
+
+        text.innerHTML = `
+          ${name}様へ<br><br>
+          お問い合わせいただきありがとうございます。<br>
+          送信いたしました。
+        `;
+
+        overlay.classList.add("show");
+        form.reset();
+
+        closeBtn.onclick = () => {
+          overlay.classList.remove("show");
+        };
+      }
+      </script>  
+
+
+    </div>
+  </div>
+
+</main>
+<footer>
+      <div class="columns">
+        <div>
+          <p><strong>Discover a world of strategy and fun.</strong></p>
+        </div>
+        <div>
+          <strong>Explore</strong>
+          <a href="../home/index.html">ホーム</a>
+          <a href="../game/index.html">メニュー＆ゲーム</a>
+          <a href="../rentals/index.html">予約</a>
+        </div>
+        <div>
+          <strong>Resources</strong>
+          <a href="../reviews/index.html">レビュー</a>
+          <a href="../access/index.html">交通アクセス</a>
+          <a href="../regulations/index.html">利用規約</a>
+        </div>
+        <div>
+          <strong>Contact Us</strong>
+          <p>123 Game Lane, Boardville, BG 54321</p>
+          <p>Email: info@boardgamecafe.com</p>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2025 Board Game Cafe Official Site. All rights reserved.
+      </div>
+    </footer>
+</body>
+</html>
