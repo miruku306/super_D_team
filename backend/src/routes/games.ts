@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import * as GamesService from "../services/games.service";
+import { authMiddleware } from "../middleware/auth";
 
 export const gamesRoutes = new Hono();
 
@@ -66,7 +67,7 @@ gamesRoutes.get("/:id/rating", async (c) => {
 });
 
 // POST /api/games - ゲーム追加
-gamesRoutes.post("/", async (c) => {
+gamesRoutes.post("/", authMiddleware, async (c) => {
   try {
     const contentType = c.req.header("content-type") || "";
     let gameData: any = {};
@@ -107,7 +108,7 @@ gamesRoutes.post("/", async (c) => {
 });
 
 // PUT /api/games/:id - ゲーム更新
-gamesRoutes.put("/:id", async (c) => {
+gamesRoutes.put("/:id", authMiddleware, async (c) => {
   const id = parseInt(c.req.param("id"), 10);
   if (isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
@@ -151,7 +152,7 @@ gamesRoutes.put("/:id", async (c) => {
 });
 
 // DELETE /api/games/:id - ゲーム削除
-gamesRoutes.delete("/:id", async (c) => {
+gamesRoutes.delete("/:id", authMiddleware, async (c) => {
   const id = parseInt(c.req.param("id"), 10);
   if (isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);

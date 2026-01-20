@@ -1,4 +1,18 @@
+// API エンドポイント
 const API_BASE_URL = "http://localhost:8787/api";
+
+// ローカルストレージにトークンを保存
+function saveToken(token) {
+  localStorage.setItem("authToken", token);
+}
+
+function getToken() {
+  return localStorage.getItem("authToken");
+}
+
+function clearToken() {
+  localStorage.removeItem("authToken");
+}
 
 const tableBody = document.getElementById("gameTableBody");
 const modal = document.getElementById("modal");
@@ -17,7 +31,45 @@ const imageFile = document.getElementById("imageFile");
 let editMode = false;
 let editingId = null;
 
-document.addEventListener("DOMContentLoaded", loadGames);
+document.addEventListener("DOMContentLoaded", async () => {
+  // トークンをチェック
+  const token = getToken();
+  
+  if (!token) {
+    alert("ログインが必要です");
+    window.location.href = "../login/index.html";
+    return;
+  }
+
+  // トークンの有効性を確認
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/verify-token`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.valid) {
+      clearToken();
+      alert("認証が無効です。再度ログインしてください");
+      window.location.href = "../login/index.html";
+      return;
+    }
+
+    console.log("認証済み:", data.user.email);
+  } catch (error) {
+    console.error("トークン検証エラー:", error);
+    clearToken();
+    alert("認証チェックに失敗しました");
+    window.location.href = "../login/index.html";
+    return;
+  }
+
+  loadGames();
+});
 
 /* =====================
    モーダル開閉処理
@@ -176,6 +228,12 @@ async function toggleReservations(gameId) {
 
 
 async function saveGame() {
+  const token = getToken();
+  if (!token) {
+    modalMessage.textContent = "認証が必要です";
+    return;
+  }
+
   const formData = new FormData();
 
   // 編集の場合は id フィールドを送らない（URLパラメータで指定）
@@ -191,17 +249,23 @@ async function saveGame() {
 
   let res;
   try {
+    const headers = {
+      "Authorization": `Bearer ${token}`
+    };
+
     if (editMode) {
       res = await fetch(`${API_BASE_URL}/games/${editingId}`, {
         method: "PUT",
-        body: formData
+        body: formData,
+        headers: headers
       });
     } else {
       // 新規追加の場合のみ id を追加
       formData.append("id", gameId.value);
       res = await fetch(`${API_BASE_URL}/games`, {
         method: "POST",
-        body: formData
+        body: formData,
+        headers: headers
       });
     }
 
@@ -225,21 +289,55 @@ async function saveGame() {
 async function deleteGame(id) {
   if (!confirm("削除しますか？")) return;
 
-  await fetch(`${API_BASE_URL}/games/${id}`, {
-    method: "DELETE"
-  });
+  const token = getToken();
+  if (!token) {
+    alert("認証が必要です");
+    return;
+  }
 
-  loadGames();
+  try {
+    const response = await fetch(`${API_BASE_URL}/games/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      alert(error.error || "削除に失敗しました");
+      return;
+    }
+
+    loadGames();
+  } catch (error) {
+    console.error("削除エラー:", error);
+    alert("削除処理でエラーが発生しました");
+  }
 }
 
 /* =====================
    ログアウト
 ===================== */
-function logout() {
-  if (confirm("ログアウトしますか？")) {
-    // ログアウト処理を実装
-    window.location.href = "../../pages/home/index.html";
+async function logout() {
+  if (!confirm("ログアウトしますか？")) return;
+
+  const token = getToken();
+  if (token) {
+    try {
+      await fetch(`${API_BASE_URL}/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.error("ログアウトエラー:", error);
+    }
   }
+
+  clearToken();
+  window.location.href = "../login/index.html";
 }
 
 
