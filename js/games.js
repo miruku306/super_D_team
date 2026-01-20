@@ -77,6 +77,7 @@ function renderGames(games) {
 function createGameCard(game) {
   const card = document.createElement("div");
   card.className = "game-card";
+  card.dataset.gameId = game.id;
 
   // 在庫状況のクラスとテキスト
   const availabilityClass = game.stock > 0 ? "available" : "in-use";
@@ -111,6 +112,11 @@ function createGameCard(game) {
       <span class="availability ${availabilityClass}">${availabilityText}</span>
     </div>
   `;
+
+  // クリックイベントを追加
+  card.addEventListener("click", () => {
+    openGameModal(game.id);
+  });
 
   return card;
 }
@@ -375,3 +381,195 @@ function showError(container, message) {
     </div>
   `;
 }
+
+/**
+ * モーダルを開く
+ */
+async function openGameModal(gameId) {
+  const modal = document.getElementById("game-modal");
+  const modalBody = modal.querySelector(".modal-body");
+
+  if (!modal || !modalBody) {
+    console.error("モーダル要素が見つかりません");
+    return;
+  }
+
+  // モーダルを表示
+  modal.classList.add("show");
+  modalBody.innerHTML = '<div class="modal-loading">読み込み中...</div>';
+
+  try {
+    // ゲーム詳細とレビューを並行して取得
+    const [gameResponse, reviewsResponse, statsResponse] = await Promise.all([
+      fetch(`${API_BASE_URL}/games/${gameId}`),
+      fetch(`${API_BASE_URL}/reviews/game/${gameId}`),
+      fetch(`${API_BASE_URL}/reviews/game/${gameId}/stats`),
+    ]);
+
+    if (!gameResponse.ok) {
+      throw new Error("ゲーム情報の取得に失敗しました");
+    }
+
+    const game = await gameResponse.json();
+    const reviews = reviewsResponse.ok ? await reviewsResponse.json() : [];
+    const stats = statsResponse.ok ? await statsResponse.json() : null;
+
+    // モーダルの内容を描画
+    renderModalContent(modalBody, game, reviews, stats);
+  } catch (error) {
+    console.error("モーダルデータ取得エラー:", error);
+    modalBody.innerHTML = `
+      <div class="modal-error">
+        <p>データの読み込みに失敗しました</p>
+        <p>${error.message}</p>
+      </div>
+    `;
+  }
+}
+
+/**
+ * モーダルの内容を描画
+ */
+function renderModalContent(container, game, reviews, stats) {
+  // 画像の有無を確認
+  const hasImage = game.image_url && game.image_url.trim() !== "";
+
+  // 画像部分のHTML
+  let imageHTML;
+  if (hasImage) {
+    imageHTML = `<img src="${game.image_url}" alt="${game.title}" />`;
+  } else {
+    imageHTML = `
+      <div class="modal-game-image-placeholder">
+        <div class="icon">🎲</div>
+        <div class="text">No Image</div>
+      </div>
+    `;
+  }
+
+  // 在庫状況
+  const availabilityClass = game.stock > 0 ? "available" : "in-use";
+  const availabilityText =
+    game.stock > 0 ? `貸出可: ${game.stock}個` : "貸出中";
+
+  // 評価統計
+  let ratingHTML = "";
+  if (stats && stats.count > 0) {
+    const stars = "★".repeat(Math.round(stats.average)) + "☆".repeat(5 - Math.round(stats.average));
+    ratingHTML = `
+      <div class="modal-rating-summary">
+        <h3>評価</h3>
+        <div class="modal-rating-stats">
+          <div class="modal-rating-average">${stats.average.toFixed(1)}</div>
+          <div>
+            <div class="modal-rating-stars">${stars}</div>
+            <div class="modal-rating-count">${stats.count}件のレビュー</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // レビュー一覧
+  let reviewsHTML = "";
+  if (reviews && reviews.length > 0) {
+    reviewsHTML = `
+      <div class="modal-reviews-section">
+        <h3>レビュー</h3>
+        ${reviews
+          .map((review) => {
+            const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+            const authorName = review.guest_name || "匿名";
+            const date = new Date(review.created_at).toLocaleDateString("ja-JP");
+            return `
+              <div class="modal-review-item">
+                <div class="modal-review-header">
+                  <div>
+                    <div class="modal-review-author">${authorName}</div>
+                    <div class="modal-review-date">${date}</div>
+                  </div>
+                  <div class="modal-review-rating">${stars}</div>
+                </div>
+                ${review.comment ? `<div class="modal-review-comment">${review.comment}</div>` : ""}
+              </div>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+  } else {
+    reviewsHTML = `
+      <div class="modal-reviews-section">
+        <h3>レビュー</h3>
+        <div class="modal-no-reviews">まだレビューがありません</div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="modal-game-header">
+      <div class="modal-game-image">
+        ${imageHTML}
+      </div>
+      <div class="modal-game-info">
+        <h2 class="modal-game-title">${game.title}</h2>
+        <p class="modal-game-description">${game.description || "説明はありません"}</p>
+        <div class="modal-game-meta">
+          <div class="modal-game-meta-item">
+            <span>👥</span>
+            <span><strong>プレイ人数:</strong> ${game.player_min}-${game.player_max}人</span>
+          </div>
+          <div class="modal-game-meta-item">
+            <span>⏱️</span>
+            <span><strong>プレイ時間:</strong> ${game.play_time}分</span>
+          </div>
+          <div class="modal-game-meta-item">
+            <span>🎯</span>
+            <span><strong>ジャンル:</strong> ${game.genre || "その他"}</span>
+          </div>
+        </div>
+        <div style="margin-top: 15px;">
+          <span class="availability ${availabilityClass}">${availabilityText}</span>
+        </div>
+      </div>
+    </div>
+    ${ratingHTML}
+    ${reviewsHTML}
+  `;
+}
+
+/**
+ * モーダルを閉じる
+ */
+function closeGameModal() {
+  const modal = document.getElementById("game-modal");
+  if (modal) {
+    modal.classList.remove("show");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("game-modal");
+  const closeBtn = modal?.querySelector(".modal-close");
+
+  // 閉じるボタン
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeGameModal);
+  }
+
+  // モーダル外をクリックで閉じる
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeGameModal();
+      }
+    });
+  }
+
+  // ESCキーで閉じる
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeGameModal();
+    }
+  });
+});
