@@ -2,7 +2,14 @@ import { Hono } from "hono";
 import { supabase } from "../lib/supabase";
 import { authMiddleware } from "../middleware/auth";
 
-export const authRoutes = new Hono();
+type Env = {
+  Variables: {
+    user: any;
+    token: string;
+  };
+};
+
+export const authRoutes = new Hono<Env>();
 
 /**
  * POST /api/auth/login - ログイン

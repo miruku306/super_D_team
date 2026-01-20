@@ -25,18 +25,20 @@
     <h1>管理者画面<br>※一般の人は回れ右<br>してください</h1>
     <p class="subtitle">ログイン</p>
 
-    <form class="login-form">
+    <div id="errorMessage" style="display: none; color: red; margin-bottom: 10px;"></div>
+
+    <form id="loginForm" class="login-form">
       <label for="email">メールアドレス</label>
       <input type="email" id="email" placeholder="example@email.com" required>
 
       <label for="password">パスワード</label>
       <input type="password" id="password" placeholder="••••••••" required>
 
-      <button type="submit">ログイン</button>
+      <button type="submit" id="submitBtn">ログイン</button>
 
     </form>
 
-    
+    <div id="loading" style="display: none; margin-top: 10px;">ログイン中...</div>
   </div>
 
   <footer>
