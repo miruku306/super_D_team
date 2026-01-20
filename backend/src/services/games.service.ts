@@ -142,9 +142,13 @@ export async function createGame(game: GameInsert) {
  * ゲーム情報を更新
  */
 export async function updateGame(id: number, updates: GameUpdate) {
+  // id フィールドを削除（PRIMARY KEY は更新不可）
+  const filteredUpdates = { ...updates };
+  delete (filteredUpdates as any).id;
+
   const { data, error } = await supabase
     .from("games")
-    .update(updates)
+    .update(filteredUpdates)
     .eq("id", id)
     .select()
     .single();
