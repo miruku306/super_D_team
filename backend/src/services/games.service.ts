@@ -1,9 +1,14 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { Database } from "../types/database.types";
 
 type Game = Database["public"]["Tables"]["games"]["Row"];
 type GameInsert = Database["public"]["Tables"]["games"]["Insert"];
 type GameUpdate = Database["public"]["Tables"]["games"]["Update"];
+
+function getClient(client?: SupabaseClient<Database>) {
+  return client ?? supabase;
+}
 
 /**
  * 全ゲームを取得
@@ -124,8 +129,11 @@ export async function getGamesByPlayerCount(playerCount: number) {
 /**
  * 新しいゲームを追加
  */
-export async function createGame(game: GameInsert) {
-  const { data, error } = await supabase
+export async function createGame(
+  game: GameInsert,
+  client?: SupabaseClient<Database>
+) {
+  const { data, error } = await getClient(client)
     .from("games")
     .insert(game)
     .select()
@@ -141,14 +149,18 @@ export async function createGame(game: GameInsert) {
 /**
  * ゲーム情報を更新
  */
-export async function updateGame(id: number, updates: GameUpdate) {
+export async function updateGame(
+  id: number,
+  updates: GameUpdate,
+  client?: SupabaseClient<Database>
+) {
   // id フィールドを削除（PRIMARY KEY は更新不可）
   const filteredUpdates = { ...updates };
   delete (filteredUpdates as any).id;
 
   console.log(`データベース更新: ID=${id}, 更新内容=`, filteredUpdates);
 
-  const { error } = await supabase
+  const { error } = await getClient(client)
     .from("games")
     .update(filteredUpdates)
     .eq("id", id);
@@ -161,7 +173,7 @@ export async function updateGame(id: number, updates: GameUpdate) {
   console.log(`UPDATE 成功 (ID=${id})`);
 
   // 更新後、更新されたゲームを取得
-  const { data, error: selectError } = await supabase
+  const { data, error: selectError } = await getClient(client)
     .from("games")
     .select("*")
     .eq("id", id)
@@ -180,8 +192,8 @@ export async function updateGame(id: number, updates: GameUpdate) {
 /**
  * ゲームを削除
  */
-export async function deleteGame(id: number) {
-  const { error } = await supabase.from("games").delete().eq("id", id);
+export async function deleteGame(id: number, client?: SupabaseClient<Database>) {
+  const { error } = await getClient(client).from("games").delete().eq("id", id);
 
   if (error) {
     throw new Error(`ゲームの削除に失敗しました: ${error.message}`);
