@@ -3,11 +3,13 @@ main = "src/worker.ts"
 compatibility_date = "2025-12-16"
 
 [vars]
-# SUPABASE_URL = "your-supabase-url"
+# SUPABASE_URL = "https://arnfwmyranctobexodfj.supabase.co"
 # SUPABASE_PUBLISHABLE_KEY = "your-publishable-key"
 # SUPABASE_SECRET_KEY = "your-secret-key"
-# SUPABASE_ANON_KEY = "your-anon-key"
+# SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFybmZ3bXlyYW5jdG9iZXhvZGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MjI4MzEsImV4cCI6MjA4MDM5ODgzMX0.a5uwVWLOXv2XyM7mhQ4FSOrPU-IgT2W6WuOvpqjTcTk"
 # SUPABASE_SERVICE_ROLE_KEY = "your-service-role-key"
 
 [dev]
 port = 8787
+
+

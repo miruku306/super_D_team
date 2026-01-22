@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { gamesRoutes } from "./routes/games";
 import { reservationsRoutes } from "./routes/reservations";
 import { reviewsRoutes } from "./routes/reviews";
+import { authRoutes } from "./routes/auth";
 import { Env, initSupabase } from "./lib/supabase";
 
 const app = new Hono<{ Bindings: Env }>();
@@ -29,14 +30,21 @@ app.get("/", (c) => {
 });
 
 // APIルート
+app.route("/api/auth", authRoutes);
 app.route("/api/games", gamesRoutes);
 app.route("/api/reservations", reservationsRoutes);
 app.route("/api/reviews", reviewsRoutes);
 
 // エラーハンドリング
 app.onError((err, c) => {
-  console.error("Error:", err.message);
-  return c.json({ error: err.message }, 500);
+  console.error("Error:", err);
+  console.error("Error Stack:", err.stack);
+  return c.json(
+    {
+      error: "Internal Server Error",
+    },
+    500
+  );
 });
 
 // 404ハンドリング

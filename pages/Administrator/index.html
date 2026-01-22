@@ -1,80 +1,80 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>ボードゲーム貸し出し管理</title>
-    <link rel="stylesheet" href="../../css/pages/administrator/style.css">
+  <meta charset="UTF-8">
+  <title>ボードゲーム管理</title>
+  <link rel="stylesheet" href="../../css/pages/administrator/style.css">
 </head>
 <body>
 
-<header>
-    <h1>ボードゲーム貸し出し管理者画面</h1>
+<header class="header">
+  <div class="header-left">
+    <h1>ボードゲーム管理画面</h1>
+  </div>
+  <div class="header-right">
+    <button class="logout-btn" onclick="logout()">ログアウト</button>
+  </div>
 </header>
 
-<main>
-    <!-- ボードゲーム一覧 -->
-    <section class="card">
-        <h2>ボードゲーム一覧</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>ゲーム名</th>
-                    <th>状態</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>カタン</td>
-                    <td class="available">貸出可能</td>
-                    <td>
-                        <button class="btn edit">編集</button>
-                        <button class="btn delete">削除</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ドミニオン</td>
-                    <td class="rented">貸出中</td>
-                    <td>
-                        <button class="btn edit">編集</button>
-                        <button class="btn delete">削除</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+<main class="main-container">
+  <div class="section-title">ゲーム一覧</div>
 
-    <!-- 貸し出し情報 -->
-    <section class="card">
-        <h2>現在の貸し出し状況</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ゲーム名</th>
-                    <th>借りた人</th>
-                    <th>貸出日</th>
-                    <th>返却予定日</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>ドミニオン</td>
-                    <td>山田 太郎</td>
-                    <td>2026/01/01</td>
-                    <td>2026/01/08</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+  <table class="game-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>タイトル</th>
+        <th>在庫</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody id="gameTableBody">
+      <!-- ゲーム行と予約情報がここに動的に追加されます -->
+    </tbody>
+  </table>
+  <p style="text-align: center; color: #999; font-size: 14px; margin-top: 15px;">
+    💡 ゲームをクリックすると予約状況が表示されます
+  </p>
 </main>
 
-<footer>
-    <p>© 2026 Board Game Management</p>
-</footer>
+<div class="add-section">
+  <button class="add-btn" onclick="openAddModal()">＋ ゲームを追加する</button>
+</div>
 
+<!-- モーダル -->
+<div id="modal" class="modal hidden">
+  <div class="modal-overlay" onclick="closeModal()"></div>
+  <div class="modal-content">
+    <h2 id="modalTitle">ボードゲーム追加</h2>
+
+    <input type="number" id="gameId" placeholder="ゲームID（新規時のみ）">
+    <input type="text" id="title" placeholder="タイトル" required>
+    <textarea id="description" placeholder="説明文"></textarea>
+    <input type="number" id="playerMin" placeholder="最小人数" required>
+    <input type="number" id="playerMax" placeholder="最大人数" required>
+    <input type="number" id="playTime" placeholder="プレイ時間（分）">
+    <select id="genre" required>
+      <option value="">ジャンルを選択</option>
+      <option value="戦略">戦略</option>
+      <option value="タイル">タイル</option>
+      <option value="拡張子">拡張子</option>
+      <option value="陣営">陣営</option>
+      <option value="ワーカープレイス">ワーカープレイス</option>
+      <option value="対戦">対戦</option>
+    </select>
+    <input type="number" id="stock" placeholder="在庫数" required>
+    <input type="file" id="imageFile" accept="image/*">
+
+    <p id="modalMessage"></p>
+
+    <div class="modal-actions">
+      <button onclick="closeModal()">キャンセル</button>
+      <button onclick="saveGame()">保存</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="../../js/administrator.js"></script>
 </body>
 </html>
-
