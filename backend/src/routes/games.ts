@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import * as GamesService from "../services/games.service";
 import { authMiddleware } from "../middleware/auth";
+import { supabase } from "../lib/supabase";
 
 export const gamesRoutes = new Hono();
 
@@ -83,6 +84,7 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
       const playerMin = formData.get("player_min");
       const playerMax = formData.get("player_max");
       const stock = formData.get("stock");
+      const imageFile = formData.get("image") as File | null;
 
       if (id !== null && id !== "") gameData.id = parseInt(String(id), 10);
       if (title !== null && title !== "") gameData.title = String(title);
@@ -90,6 +92,30 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
       if (playerMin !== null && playerMin !== "") gameData.player_min = parseInt(String(playerMin), 10);
       if (playerMax !== null && playerMax !== "") gameData.player_max = parseInt(String(playerMax), 10);
       if (stock !== null && stock !== "") gameData.stock = parseInt(String(stock), 10);
+
+      // 画像がある場合、Supabase Storage にアップロード
+      if (imageFile && imageFile.size > 0) {
+        const arrayBuffer = await imageFile.arrayBuffer();
+        const fileName = `game-${Date.now()}-${imageFile.name}`;
+        
+        const { data, error } = await supabase.storage
+          .from("game-images")
+          .upload(fileName, new Uint8Array(arrayBuffer), {
+            contentType: imageFile.type,
+            upsert: false
+          });
+
+        if (error) {
+          throw new Error(`画像のアップロードに失敗しました: ${error.message}`);
+        }
+
+        // 画像の URL を取得
+        const { data: { publicUrl } } = supabase.storage
+          .from("game-images")
+          .getPublicUrl(fileName);
+
+        gameData.image_url = publicUrl;
+      }
     } else {
       // JSON形式の場合
       gameData = await c.req.json();
@@ -129,6 +155,31 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
         if (key === "player_min" && value) updates.player_min = parseInt(String(value), 10);
         if (key === "player_max" && value) updates.player_max = parseInt(String(value), 10);
         if (key === "stock" && value) updates.stock = parseInt(String(value), 10);
+      }
+
+      // 画像がある場合、Supabase Storage にアップロード
+      const imageFile = formData.get("image") as File | null;
+      if (imageFile && imageFile.size > 0) {
+        const arrayBuffer = await imageFile.arrayBuffer();
+        const fileName = `game-${id}-${Date.now()}-${imageFile.name}`;
+        
+        const { data, error } = await supabase.storage
+          .from("game-images")
+          .upload(fileName, new Uint8Array(arrayBuffer), {
+            contentType: imageFile.type,
+            upsert: false
+          });
+
+        if (error) {
+          throw new Error(`画像のアップロードに失敗しました: ${error.message}`);
+        }
+
+        // 画像の URL を取得
+        const { data: { publicUrl } } = supabase.storage
+          .from("game-images")
+          .getPublicUrl(fileName);
+
+        updates.image_url = publicUrl;
       }
     } else {
       // JSON形式の場合
