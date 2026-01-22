@@ -1,10 +1,11 @@
 import { Hono } from "hono";
+import type { User } from "@supabase/supabase-js";
 import { supabase, supabaseAdmin } from "../lib/supabase";
 import { authMiddleware } from "../middleware/auth";
 
 type Env = {
   Variables: {
-    user: any;
+    user: User;
     token: string;
   };
 };

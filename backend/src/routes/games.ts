@@ -1,7 +1,13 @@
 import { Hono } from "hono";
+import type { Database } from "../types/database.types";
 import * as GamesService from "../services/games.service";
 import { authMiddleware } from "../middleware/auth";
 import { supabaseAdmin } from "../lib/supabase";
+
+type GameInsert = Database["public"]["Tables"]["games"]["Insert"];
+type GameUpdate = Database["public"]["Tables"]["games"]["Update"];
+type GameCreatePayload = Partial<GameInsert>;
+type GameUpdatePayload = Partial<GameUpdate>;
 
 export const gamesRoutes = new Hono();
 
@@ -30,7 +36,7 @@ gamesRoutes.get("/search", async (c) => {
 // GET /api/games/players/:count - プレイ人数でフィルタ
 gamesRoutes.get("/players/:count", async (c) => {
   const count = parseInt(c.req.param("count"), 10);
-  if (isNaN(count) || count < 1) {
+  if (Number.isNaN(count) || count < 1) {
     return c.json({ error: "有効なプレイ人数を指定してください" }, 400);
   }
   const games = await GamesService.getGamesByPlayerCount(count);
@@ -40,7 +46,7 @@ gamesRoutes.get("/players/:count", async (c) => {
 // GET /api/games/:id - 特定のゲーム取得
 gamesRoutes.get("/:id", async (c) => {
   const id = parseInt(c.req.param("id"), 10);
-  if (isNaN(id)) {
+  if (Number.isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
   }
   const game = await GamesService.getGameById(id);
@@ -50,7 +56,7 @@ gamesRoutes.get("/:id", async (c) => {
 // GET /api/games/:id/reviews - ゲームをレビュー付きで取得
 gamesRoutes.get("/:id/reviews", async (c) => {
   const id = parseInt(c.req.param("id"), 10);
-  if (isNaN(id)) {
+  if (Number.isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
   }
   const game = await GamesService.getGameWithReviews(id);
@@ -60,7 +66,7 @@ gamesRoutes.get("/:id/reviews", async (c) => {
 // GET /api/games/:id/rating - ゲームの平均評価取得
 gamesRoutes.get("/:id/rating", async (c) => {
   const id = parseInt(c.req.param("id"), 10);
-  if (isNaN(id)) {
+  if (Number.isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
   }
   const rating = await GamesService.getGameAverageRating(id);
@@ -75,7 +81,7 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
     }
 
     const contentType = c.req.header("content-type") || "";
-    let gameData: any = {};
+    let gameData: GameCreatePayload = {};
 
     if (contentType.includes("multipart/form-data")) {
       // FormData形式の場合
@@ -126,14 +132,17 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
       }
     } else {
       // JSON形式の場合
-      gameData = await c.req.json();
+      gameData = (await c.req.json()) as GameCreatePayload;
     }
 
     if (!gameData.title) {
       return c.json({ error: "タイトルは必須です" }, 400);
     }
 
-    const game = await GamesService.createGame(gameData, supabaseAdmin);
+    const game = await GamesService.createGame(
+      gameData as GameInsert,
+      supabaseAdmin
+    );
     return c.json(game, 201);
   } catch (error) {
     console.error("ゲーム追加エラー:", error);
@@ -144,7 +153,7 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
 // PUT /api/games/:id - ゲーム更新
 gamesRoutes.put("/:id", authMiddleware, async (c) => {
   const id = parseInt(c.req.param("id"), 10);
-  if (isNaN(id)) {
+  if (Number.isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
   }
 
@@ -154,7 +163,7 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
     }
 
     const contentType = c.req.header("content-type") || "";
-    let updates: any = {};
+    let updates: GameUpdatePayload = {};
 
     if (contentType.includes("multipart/form-data")) {
       // FormData形式の場合
@@ -197,7 +206,7 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
       }
     } else {
       // JSON形式の場合
-      updates = await c.req.json();
+      updates = (await c.req.json()) as GameUpdatePayload;
     }
 
     if (Object.keys(updates).length === 0) {
@@ -224,7 +233,7 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
 // DELETE /api/games/:id - ゲーム削除
 gamesRoutes.delete("/:id", authMiddleware, async (c) => {
   const id = parseInt(c.req.param("id"), 10);
-  if (isNaN(id)) {
+  if (Number.isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
   }
   if (!supabaseAdmin) {

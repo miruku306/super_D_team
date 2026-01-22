@@ -1,8 +1,7 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
-import { Database } from "../types/database.types";
+import type { Database } from "../types/database.types";
 
-type Game = Database["public"]["Tables"]["games"]["Row"];
 type GameInsert = Database["public"]["Tables"]["games"]["Insert"];
 type GameUpdate = Database["public"]["Tables"]["games"]["Update"];
 
@@ -155,8 +154,9 @@ export async function updateGame(
   client?: SupabaseClient<Database>
 ) {
   // id フィールドを削除（PRIMARY KEY は更新不可）
-  const filteredUpdates = { ...updates };
-  delete (filteredUpdates as any).id;
+  const { id: _id, ...filteredUpdates } = updates as GameUpdate & {
+    id?: number;
+  };
 
   console.log(`データベース更新: ID=${id}, 更新内容=`, filteredUpdates);
 
