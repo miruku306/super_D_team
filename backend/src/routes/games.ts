@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import * as GamesService from "../services/games.service";
 import { authMiddleware } from "../middleware/auth";
-import { supabase } from "../lib/supabase";
+import { supabaseAdmin } from "../lib/supabase";
 
 export const gamesRoutes = new Hono();
 
@@ -70,6 +70,10 @@ gamesRoutes.get("/:id/rating", async (c) => {
 // POST /api/games - ゲーム追加
 gamesRoutes.post("/", authMiddleware, async (c) => {
   try {
+    if (!supabaseAdmin) {
+      return c.json({ error: "管理者クライアントが未設定です" }, 500);
+    }
+
     const contentType = c.req.header("content-type") || "";
     let gameData: any = {};
 
@@ -102,7 +106,7 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
         const arrayBuffer = await imageFile.arrayBuffer();
         const fileName = `game-${Date.now()}-${imageFile.name}`;
         
-        const { data, error } = await supabase.storage
+        const { error } = await supabaseAdmin.storage
           .from("game-images")
           .upload(fileName, new Uint8Array(arrayBuffer), {
             contentType: imageFile.type,
@@ -114,7 +118,7 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
         }
 
         // 画像の URL を取得
-        const { data: { publicUrl } } = supabase.storage
+        const { data: { publicUrl } } = supabaseAdmin.storage
           .from("game-images")
           .getPublicUrl(fileName);
 
@@ -129,7 +133,7 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
       return c.json({ error: "タイトルは必須です" }, 400);
     }
 
-    const game = await GamesService.createGame(gameData);
+    const game = await GamesService.createGame(gameData, supabaseAdmin);
     return c.json(game, 201);
   } catch (error) {
     console.error("ゲーム追加エラー:", error);
@@ -145,6 +149,10 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
   }
 
   try {
+    if (!supabaseAdmin) {
+      return c.json({ error: "管理者クライアントが未設定です" }, 500);
+    }
+
     const contentType = c.req.header("content-type") || "";
     let updates: any = {};
 
@@ -169,7 +177,7 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
         const arrayBuffer = await imageFile.arrayBuffer();
         const fileName = `game-${id}-${Date.now()}-${imageFile.name}`;
         
-        const { data, error } = await supabase.storage
+        const { error } = await supabaseAdmin.storage
           .from("game-images")
           .upload(fileName, new Uint8Array(arrayBuffer), {
             contentType: imageFile.type,
@@ -181,7 +189,7 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
         }
 
         // 画像の URL を取得
-        const { data: { publicUrl } } = supabase.storage
+        const { data: { publicUrl } } = supabaseAdmin.storage
           .from("game-images")
           .getPublicUrl(fileName);
 
@@ -205,7 +213,7 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
     }
     
     console.log(`ゲーム ${id} を更新:`, updates);
-    const game = await GamesService.updateGame(id, updates);
+    const game = await GamesService.updateGame(id, updates, supabaseAdmin);
     return c.json(game);
   } catch (error) {
     console.error("ゲーム更新エラー:", error);
@@ -219,6 +227,10 @@ gamesRoutes.delete("/:id", authMiddleware, async (c) => {
   if (isNaN(id)) {
     return c.json({ error: "有効なIDを指定してください" }, 400);
   }
-  const result = await GamesService.deleteGame(id);
+  if (!supabaseAdmin) {
+    return c.json({ error: "管理者クライアントが未設定です" }, 500);
+  }
+
+  const result = await GamesService.deleteGame(id, supabaseAdmin);
   return c.json(result);
 });
