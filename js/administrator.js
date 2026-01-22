@@ -92,7 +92,8 @@ function openAddModal() {
   modal.classList.remove("hidden");
 }
 
-function openEditModal(id) {
+function openEditModal(event, id) {
+  if (event) event.stopPropagation();
   editMode = true;
   editingId = id;
   modalTitle.textContent = "ボードゲーム編集";
@@ -145,8 +146,8 @@ async function loadGames() {
       <td>${game.title}</td>
       <td>${game.stock}</td>
       <td>
-        <button onclick="openEditModal(${game.id})">編集</button>
-        <button onclick="deleteGame(${game.id})">削除</button>
+        <button onclick="openEditModal(event, ${game.id})">編集</button>
+        <button onclick="deleteGame(event, ${game.id})">削除</button>
       </td>
     `;
     tr.style.cursor = "pointer";
@@ -294,7 +295,8 @@ async function saveGame() {
 }
 
 
-async function deleteGame(id) {
+async function deleteGame(event, id) {
+  if (event) event.stopPropagation();
   if (!confirm("削除しますか？")) return;
 
   const token = getToken();
