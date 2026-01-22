@@ -39,10 +39,12 @@ app.route("/api/reviews", reviewsRoutes);
 app.onError((err, c) => {
   console.error("Error:", err);
   console.error("Error Stack:", err.stack);
-  return c.json({ 
-    error: err.message,
-    details: err.stack 
-  }, 500);
+  return c.json(
+    {
+      error: "Internal Server Error",
+    },
+    500
+  );
 });
 
 // 404ハンドリング
