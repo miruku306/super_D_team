@@ -146,15 +146,24 @@ export async function updateGame(id: number, updates: GameUpdate) {
   const filteredUpdates = { ...updates };
   delete (filteredUpdates as any).id;
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("games")
     .update(filteredUpdates)
-    .eq("id", id)
-    .select()
-    .single();
+    .eq("id", id);
 
   if (error) {
     throw new Error(`ゲームの更新に失敗しました: ${error.message}`);
+  }
+
+  // 更新後、更新されたゲームを取得
+  const { data, error: selectError } = await supabase
+    .from("games")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (selectError) {
+    throw new Error(`更新されたゲームの取得に失敗しました: ${selectError.message}`);
   }
 
   return data;

@@ -123,17 +123,13 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
       const formData = await c.req.formData();
       
       // フォームデータをオブジェクトに変換
-      const title = formData.get("title");
-      const description = formData.get("description");
-      const playerMin = formData.get("player_min");
-      const playerMax = formData.get("player_max");
-      const stock = formData.get("stock");
-
-      if (title !== null && title !== "") updates.title = String(title);
-      if (description !== null) updates.description = String(description);
-      if (playerMin !== null && playerMin !== "") updates.player_min = parseInt(String(playerMin), 10);
-      if (playerMax !== null && playerMax !== "") updates.player_max = parseInt(String(playerMax), 10);
-      if (stock !== null && stock !== "") updates.stock = parseInt(String(stock), 10);
+      for (const [key, value] of formData.entries()) {
+        if (key === "title" && value) updates.title = String(value);
+        if (key === "description") updates.description = String(value);
+        if (key === "player_min" && value) updates.player_min = parseInt(String(value), 10);
+        if (key === "player_max" && value) updates.player_max = parseInt(String(value), 10);
+        if (key === "stock" && value) updates.stock = parseInt(String(value), 10);
+      }
     } else {
       // JSON形式の場合
       updates = await c.req.json();
@@ -143,6 +139,15 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
       return c.json({ error: "更新するデータがありません" }, 400);
     }
 
+    console.log(`ゲーム ${id} を更新する前:`, updates);
+    
+    // id フィールドを明示的に削除
+    if ('id' in updates) {
+      delete updates.id;
+      console.log('id フィールドを削除しました');
+    }
+    
+    console.log(`ゲーム ${id} を更新:`, updates);
     const game = await GamesService.updateGame(id, updates);
     return c.json(game);
   } catch (error) {
