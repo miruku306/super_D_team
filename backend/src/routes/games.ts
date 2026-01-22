@@ -83,6 +83,8 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
       const description = formData.get("description");
       const playerMin = formData.get("player_min");
       const playerMax = formData.get("player_max");
+      const playTime = formData.get("play_time");
+      const genreValue = formData.get("genre");
       const stock = formData.get("stock");
       const imageFile = formData.get("image") as File | null;
 
@@ -91,6 +93,8 @@ gamesRoutes.post("/", authMiddleware, async (c) => {
       if (description !== null) gameData.description = String(description);
       if (playerMin !== null && playerMin !== "") gameData.player_min = parseInt(String(playerMin), 10);
       if (playerMax !== null && playerMax !== "") gameData.player_max = parseInt(String(playerMax), 10);
+      if (playTime !== null && playTime !== "") gameData.play_time = parseInt(String(playTime), 10);
+      if (genreValue !== null && genreValue !== "") gameData.genre = String(genreValue);
       if (stock !== null && stock !== "") gameData.stock = parseInt(String(stock), 10);
 
       // 画像がある場合、Supabase Storage にアップロード
@@ -154,6 +158,8 @@ gamesRoutes.put("/:id", authMiddleware, async (c) => {
         if (key === "description") updates.description = String(value);
         if (key === "player_min" && value) updates.player_min = parseInt(String(value), 10);
         if (key === "player_max" && value) updates.player_max = parseInt(String(value), 10);
+        if (key === "play_time" && value) updates.play_time = parseInt(String(value), 10);
+        if (key === "genre" && value) updates.genre = String(value);
         if (key === "stock" && value) updates.stock = parseInt(String(value), 10);
       }
 

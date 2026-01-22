@@ -146,14 +146,19 @@ export async function updateGame(id: number, updates: GameUpdate) {
   const filteredUpdates = { ...updates };
   delete (filteredUpdates as any).id;
 
+  console.log(`データベース更新: ID=${id}, 更新内容=`, filteredUpdates);
+
   const { error } = await supabase
     .from("games")
     .update(filteredUpdates)
     .eq("id", id);
 
   if (error) {
+    console.error(`UPDATE エラー (ID=${id}):`, error);
     throw new Error(`ゲームの更新に失敗しました: ${error.message}`);
   }
+
+  console.log(`UPDATE 成功 (ID=${id})`);
 
   // 更新後、更新されたゲームを取得
   const { data, error: selectError } = await supabase
@@ -163,8 +168,11 @@ export async function updateGame(id: number, updates: GameUpdate) {
     .single();
 
   if (selectError) {
+    console.error(`SELECT エラー (ID=${id}):`, selectError);
     throw new Error(`更新されたゲームの取得に失敗しました: ${selectError.message}`);
   }
+
+  console.log(`SELECT 成功 (ID=${id}):`, data);
 
   return data;
 }

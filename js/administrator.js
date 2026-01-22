@@ -24,6 +24,8 @@ const title = document.getElementById("title");
 const description = document.getElementById("description");
 const playerMin = document.getElementById("playerMin");
 const playerMax = document.getElementById("playerMax");
+const playTime = document.getElementById("playTime");
+const genre = document.getElementById("genre");
 const stock = document.getElementById("stock");
 const imageFile = document.getElementById("imageFile");
 
@@ -82,6 +84,8 @@ function openAddModal() {
   description.value = "";
   playerMin.value = "";
   playerMax.value = "";
+  playTime.value = "";
+  genre.value = "";
   stock.value = "";
   imageFile.value = "";
   modalMessage.textContent = "";
@@ -104,6 +108,8 @@ function openEditModal(id) {
       description.value = game.description || "";
       playerMin.value = game.player_min || "";
       playerMax.value = game.player_max || "";
+      playTime.value = game.play_time || "";
+      genre.value = game.genre || "";
       stock.value = game.stock;
       imageFile.value = "";
     })
@@ -241,6 +247,8 @@ async function saveGame() {
   formData.append("description", description.value);
   formData.append("player_min", playerMin.value);
   formData.append("player_max", playerMax.value);
+  formData.append("play_time", playTime.value);
+  formData.append("genre", genre.value);
   formData.append("stock", stock.value);
 
   if (imageFile.files[0]) {
