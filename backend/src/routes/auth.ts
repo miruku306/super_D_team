@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { supabase } from "../lib/supabase";
+import { supabase, supabaseAdmin } from "../lib/supabase";
 import { authMiddleware } from "../middleware/auth";
 
 type Env = {
@@ -67,4 +67,22 @@ authRoutes.get("/me", authMiddleware, async (c) => {
 authRoutes.post("/verify-token", authMiddleware, async (c) => {
   const user = c.get("user");
   return c.json({ valid: true, user });
+});
+
+/**
+ * POST /api/auth/logout - ログアウト
+ * ヘッダー: Authorization: Bearer <token>
+ * レスポンス: { success: boolean }
+ */
+authRoutes.post("/logout", authMiddleware, async (c) => {
+  const user = c.get("user");
+
+  if (supabaseAdmin) {
+    const { error } = await supabaseAdmin.auth.admin.signOut(user.id);
+    if (error) {
+      return c.json({ error: "ログアウトに失敗しました" }, 500);
+    }
+  }
+
+  return c.json({ success: true });
 });
