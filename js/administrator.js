@@ -1,24 +1,5 @@
-// API エンドポイント
-const API_BASE_URL = (() => {
-  const host = window.location.hostname;
-  const isLocal = host === "localhost" || host === "127.0.0.1";
-  return isLocal
-    ? "http://localhost:8787/api"
-    : "https://super-d-team.mi-ma-2x9-28.workers.dev/api";
-})();
-
-// ローカルストレージにトークンを保存
-function saveToken(token) {
-  localStorage.setItem("authToken", token);
-}
-
-function getToken() {
-  return localStorage.getItem("authToken");
-}
-
-function clearToken() {
-  localStorage.removeItem("authToken");
-}
+const { getApiBaseUrl, getToken, clearToken } = window.AppUtils;
+const API_BASE_URL = getApiBaseUrl();
 
 const tableBody = document.getElementById("gameTableBody");
 const modal = document.getElementById("modal");
