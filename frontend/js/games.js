@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8787/api";
+const API_BASE_URL = "https://super-d-team.mi-ma-2x9-28.workers.dev";
 
 // 状態管理
 let allGames = [];

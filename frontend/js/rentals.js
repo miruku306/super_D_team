@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://super-d-team.mi-ma-2x9-28.workers.dev";
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".rental-form");
 
@@ -40,19 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // ゲーム名からゲームIDを取得する
     try {
       const submitButton = form.querySelector('button[type="submit"]');
       submitButton.disabled = true;
       submitButton.textContent = "送信中...";
 
-      const gamesResponse = await fetch("http://localhost:8787/api/games");
+      const gamesResponse = await fetch(`${API_BASE_URL}/api/games`);
       if (!gamesResponse.ok) {
         throw new Error("ゲーム情報の取得に失敗しました");
       }
 
       const games = await gamesResponse.json();
-
       const game = games.find((g) => g.title === gameName);
 
       if (!game) {
@@ -66,23 +66,21 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // 予約データの作成
       const reservationData = {
         gameId: game.id,
         guestInfo: {
-          name: name,
-          email: email,
+          name,
+          email,
           phone: phone || null,
           start_date: startDate,
           end_date: endDate,
-          players: players,
+          players,
           notes: notes || null,
         },
       };
 
-      // 予約APIへの送信
       const response = await fetch(
-        "http://localhost:8787/api/reservations/guest",
+        `${API_BASE_URL}/api/reservations/guest`,
         {
           method: "POST",
           headers: {
@@ -103,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `予約が完了しました！\n\n予約ID: ${result.id}\nゲーム: ${gameName}\n貸出日: ${startDate}\n返却予定日: ${endDate}\n\n確認メールを ${email} に送信しました。`
       );
 
-      // フォームをリセット
       form.reset();
     } catch (error) {
       console.error("予約エラー:", error);
@@ -115,20 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 日付の最小値を今日に設定
   const today = new Date().toISOString().split("T")[0];
   const startDateInput = form.querySelector('input[name="start_date"]');
   const endDateInput = form.querySelector('input[name="end_date"]');
 
   if (startDateInput) {
     startDateInput.min = today;
-
-    // 貸出日が変更されたら、返却予定日の最小値を更新
     startDateInput.addEventListener("change", () => {
       if (endDateInput && startDateInput.value) {
         endDateInput.min = startDateInput.value;
-
-        // もし返却予定日が貸出日より前なら、クリア
         if (endDateInput.value && endDateInput.value <= startDateInput.value) {
           endDateInput.value = "";
         }
@@ -140,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
     endDateInput.min = today;
   }
 
-  // ゲーム一覧を読み込む関数
   async function loadGames() {
     const gameSelect = document.getElementById("game-select");
     if (!gameSelect) {
@@ -149,13 +140,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8787/api/games/available");
+      const response = await fetch(
+        `${API_BASE_URL}/api/games/available`
+      );
       if (!response.ok) {
         throw new Error("ゲーム一覧の取得に失敗しました");
       }
 
       const games = await response.json();
-      console.log("読み込まれたゲーム:", games);
 
       while (gameSelect.options.length > 1) {
         gameSelect.remove(1);
@@ -168,19 +160,15 @@ document.addEventListener("DOMContentLoaded", () => {
         gameSelect.appendChild(option);
       });
 
-      // 在庫がない場合
       if (games.length === 0) {
         const option = document.createElement("option");
-        option.value = "";
         option.textContent = "現在貸出可能なゲームはありません";
         option.disabled = true;
         gameSelect.appendChild(option);
       }
     } catch (error) {
       console.error("ゲーム一覧の読み込みエラー:", error);
-      alert(
-        "ゲーム一覧の読み込みに失敗しました。ページを再読み込みしてください。"
-      );
+      alert("ゲーム一覧の読み込みに失敗しました。");
     }
   }
 });
