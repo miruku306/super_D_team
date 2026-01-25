@@ -98,7 +98,7 @@ function openAddModal() {
   modal.classList.remove("hidden");
 }
 
-function openEditModal(event, id) {
+async function openEditModal(event, id) {
   if (event) event.stopPropagation();
   editMode = true;
   editingId = id;
@@ -107,23 +107,25 @@ function openEditModal(event, id) {
   modal.classList.remove("hidden");
   
   // 既存データを取得して入力欄に設定
-  fetch(`${API_BASE_URL}/games/${id}`)
-    .then(res => res.json())
-    .then(game => {
-      gameId.value = game.id;
-      title.value = game.title;
-      description.value = game.description || "";
-      playerMin.value = game.player_min || "";
-      playerMax.value = game.player_max || "";
-      playTime.value = game.play_time || "";
-      genre.value = game.genre || "";
-      stock.value = game.stock;
-      imageFile.value = "";
-    })
-    .catch(error => {
-      modalMessage.textContent = "ゲーム情報の取得に失敗しました";
-      console.error(error);
-    });
+  try {
+    const res = await fetch(`${API_BASE_URL}/games/${id}`);
+    if (!res.ok) {
+      throw new Error(`HTTPエラー: ${res.status}`);
+    }
+    const game = await res.json();
+    gameId.value = game.id;
+    title.value = game.title;
+    description.value = game.description || "";
+    playerMin.value = game.player_min || "";
+    playerMax.value = game.player_max || "";
+    playTime.value = game.play_time || "";
+    genre.value = game.genre || "";
+    stock.value = game.stock;
+    imageFile.value = "";
+  } catch (error) {
+    modalMessage.textContent = "ゲーム情報の取得に失敗しました";
+    console.error(error);
+  }
 }
 
 function closeModal() {
