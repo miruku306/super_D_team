@@ -1,43 +1,25 @@
-// API エンドポイント
-const API_BASE_URL = (() => {
-  const host = window.location.hostname;
-  const isLocal = host === "localhost" || host === "127.0.0.1";
-  return isLocal
-    ? "http://localhost:8787/api"
-    : "https://super-d-team.mi-ma-2x9-28.workers.dev/api";
-})();
-
-// ローカルストレージにトークンを保存
-function saveToken(token) {
-  localStorage.setItem("authToken", token);
-}
-
-function getToken() {
-  return localStorage.getItem("authToken");
-}
-
-function clearToken() {
-  localStorage.removeItem("authToken");
-}
+const {
+  getApiBaseUrl,
+  saveToken,
+  getToken,
+  clearToken,
+  fetchJson
+} = window.AppUtils;
+const API_BASE_URL = getApiBaseUrl();
 
 document.addEventListener("DOMContentLoaded", async () => {
   // ページ読み込み時に既にトークンがあれば管理画面へ
   const token = getToken();
   if (token) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/verify-token`, {
+      await fetchJson(`${API_BASE_URL}/auth/verify-token`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`
         }
       });
-
-      if (response.ok) {
-        console.log("既に認証済み");
-        window.location.href = "../administrator/index.html";
-      } else {
-        clearToken();
-      }
+      console.log("既に認証済み");
+      window.location.href = "../administrator/index.html";
     } catch (error) {
       console.error("トークン検証エラー:", error);
       clearToken();
@@ -67,24 +49,13 @@ async function handleLogin(e) {
   submitBtn.disabled = true;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    const data = await fetchJson(`${API_BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email, password })
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error("ログインエラー:", data);
-      errorMessage.textContent = data.error || "ログインに失敗しました";
-      errorMessage.style.display = "block";
-      loading.style.display = "none";
-      submitBtn.disabled = false;
-      return;
-    }
 
     console.log("ログイン成功:", data.user.email);
 
@@ -97,7 +68,7 @@ async function handleLogin(e) {
     window.location.href = "../administrator/index.html";
   } catch (error) {
     console.error("エラー:", error);
-    errorMessage.textContent = "通信エラーが発生しました";
+    errorMessage.textContent = error.message || "通信エラーが発生しました";
     errorMessage.style.display = "block";
     loading.style.display = "none";
     submitBtn.disabled = false;

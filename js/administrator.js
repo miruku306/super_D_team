@@ -1,24 +1,5 @@
-// API エンドポイント
-const API_BASE_URL = (() => {
-  const host = window.location.hostname;
-  const isLocal = host === "localhost" || host === "127.0.0.1";
-  return isLocal
-    ? "http://localhost:8787/api"
-    : "https://super-d-team.mi-ma-2x9-28.workers.dev/api";
-})();
-
-// ローカルストレージにトークンを保存
-function saveToken(token) {
-  localStorage.setItem("authToken", token);
-}
-
-function getToken() {
-  return localStorage.getItem("authToken");
-}
-
-function clearToken() {
-  localStorage.removeItem("authToken");
-}
+const { getApiBaseUrl, getToken, clearToken } = window.AppUtils;
+const API_BASE_URL = getApiBaseUrl();
 
 const tableBody = document.getElementById("gameTableBody");
 const modal = document.getElementById("modal");
@@ -98,7 +79,7 @@ function openAddModal() {
   modal.classList.remove("hidden");
 }
 
-function openEditModal(event, id) {
+async function openEditModal(event, id) {
   if (event) event.stopPropagation();
   editMode = true;
   editingId = id;
@@ -107,23 +88,25 @@ function openEditModal(event, id) {
   modal.classList.remove("hidden");
   
   // 既存データを取得して入力欄に設定
-  fetch(`${API_BASE_URL}/games/${id}`)
-    .then(res => res.json())
-    .then(game => {
-      gameId.value = game.id;
-      title.value = game.title;
-      description.value = game.description || "";
-      playerMin.value = game.player_min || "";
-      playerMax.value = game.player_max || "";
-      playTime.value = game.play_time || "";
-      genre.value = game.genre || "";
-      stock.value = game.stock;
-      imageFile.value = "";
-    })
-    .catch(error => {
-      modalMessage.textContent = "ゲーム情報の取得に失敗しました";
-      console.error(error);
-    });
+  try {
+    const res = await fetch(`${API_BASE_URL}/games/${id}`);
+    if (!res.ok) {
+      throw new Error(`HTTPエラー: ${res.status}`);
+    }
+    const game = await res.json();
+    gameId.value = game.id;
+    title.value = game.title;
+    description.value = game.description || "";
+    playerMin.value = game.player_min || "";
+    playerMax.value = game.player_max || "";
+    playTime.value = game.play_time || "";
+    genre.value = game.genre || "";
+    stock.value = game.stock;
+    imageFile.value = "";
+  } catch (error) {
+    modalMessage.textContent = "ゲーム情報の取得に失敗しました";
+    console.error(error);
+  }
 }
 
 function closeModal() {
