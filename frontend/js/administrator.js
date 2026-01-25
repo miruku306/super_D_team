@@ -1,6 +1,5 @@
 // API エンドポイント
-const API_BASE_URL = "https://super-d-team.mi-ma-2x9-28.workers.dev";
-
+const API_BASE_URL = "http://localhost:8787/api";
 
 // ローカルストレージにトークンを保存
 function saveToken(token) {
