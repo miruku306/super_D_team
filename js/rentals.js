@@ -1,3 +1,11 @@
+const API_BASE_URL = (() => {
+  const host = window.location.hostname;
+  const isLocal = host === "localhost" || host === "127.0.0.1";
+  return isLocal
+    ? "http://localhost:8787/api"
+    : "https://super-d-team.mi-ma-2x9-28.workers.dev/api";
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".rental-form");
 
@@ -46,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitButton.disabled = true;
       submitButton.textContent = "送信中...";
 
-      const gamesResponse = await fetch("http://localhost:8787/api/games");
+      const gamesResponse = await fetch(`${API_BASE_URL}/games`);
       if (!gamesResponse.ok) {
         throw new Error("ゲーム情報の取得に失敗しました");
       }
@@ -81,16 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       // 予約APIへの送信
-      const response = await fetch(
-        "http://localhost:8787/api/reservations/guest",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(reservationData),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/reservations/guest`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservationData),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -149,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8787/api/games/available");
+      const response = await fetch(`${API_BASE_URL}/games/available`);
       if (!response.ok) {
         throw new Error("ゲーム一覧の取得に失敗しました");
       }
