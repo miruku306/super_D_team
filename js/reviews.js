@@ -1,4 +1,10 @@
-const API_BASE_URL = "http://localhost:8787/api";
+const API_BASE_URL = (() => {
+  const host = window.location.hostname;
+  const isLocal = host === "localhost" || host === "127.0.0.1";
+  return isLocal
+    ? "http://localhost:8787/api"
+    : "https://super-d-team.mi-ma-2x9-28.workers.dev/api";
+})();
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("review-form");
