@@ -60,7 +60,7 @@ async function handleLogin(e) {
     console.log("ログイン成功:", data.user.email);
     
     // トークンを保存
-    if (data.session && data.session.access_token) {
+    if (data?.session?.access_token) {
       saveToken(data.session.access_token);
     }
 
