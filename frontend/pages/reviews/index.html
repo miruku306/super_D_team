@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>レビューを書く</title>
+    <link rel="stylesheet" href="../../css/pages/reviews/style.css" />
+    <script>
+      function setRating(r) {
+        document.getElementById("rating").value = r;
+
+        for (let i = 1; i <= 5; i++) {
+          document.getElementById("star" + i).textContent = i <= r ? "★" : "☆";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a href="../../index.html">
+          <img src="../../img/title_logo.webp" alt="" class="logo-icon" />
+        </a>
+        負けても泣かない大人の社交場
+      </div>
+      <nav>
+        <a href="../game/index.html">メニュー＆ゲーム</a>
+        <a href="../reviews/index.html">レビュー</a>
+        <a href="../access/index.html">交通アクセス</a>
+      </nav>
+      <a class="reserve-btn" href="../rentals/index.html">今すぐ予約</a>
+    </header>
+
+    <div class="container">
+      <div class="title-box">
+        <h2>レビューを書く</h2>
+        <p>
+          ゲームを選んで、評価とコメントを投稿してください。匿名でもOKです！
+        </p>
+      </div>
+
+      <div class="content">
+        <div class="left">
+          <img
+            src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70"
+            alt=""
+          />
+        </div>
+
+        <div class="right">
+          <h3>レビュー投稿フォーム</h3>
+
+          <form id="review-form" autocomplete="off">
+            <label>ゲームを選択</label>
+            <select name="game_id" id="game-select" required>
+              <option value="">— ゲームを選択 —</option>
+              <!-- ゲーム一覧は動的に読み込まれます -->
+            </select>
+
+            <label>ニックネーム（任意・レビューに表示されます）</label>
+            <input
+              type="text"
+              name="guest_name"
+              placeholder="例：ボドゲ好き太郎"
+              maxlength="50"
+            />
+
+            <label>評価（1〜5）</label>
+            <div class="stars">
+              <span id="star1" onclick="setRating(1)">☆</span>
+              <span id="star2" onclick="setRating(2)">☆</span>
+              <span id="star3" onclick="setRating(3)">☆</span>
+              <span id="star4" onclick="setRating(4)">☆</span>
+              <span id="star5" onclick="setRating(5)">☆</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" value="0" />
+
+            <label>コメント</label>
+            <textarea name="comment" rows="5" required></textarea>
+
+            <button type="submit">送信する</button>
+          </form>
+
+          <div
+            id="review-result"
+            style="margin-top: 14px; display: none"
+            aria-live="polite"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="columns">
+        <div>
+          <p><strong>Discover a world of strategy and fun.</strong></p>
+        </div>
+        <div>
+          <strong>Explore</strong>
+          <a href="../../index.html">ホーム</a>
+          <a href="../game/index.html">メニュー＆ゲーム</a>
+          <a href="../rentals/index.html">予約</a>
+        </div>
+        <div>
+          <strong>Resources</strong>
+          <a href="../reviews/index.html">レビュー</a>
+          <a href="../access/index.html">交通アクセス</a>
+          <a href="../regulations/index.html">利用規約</a>
+          <a href="../login/index.html">管理者ログイン</a>
+        </div>
+        <div>
+          <strong>Contact Us</strong>
+          <p>123 Game Lane, Boardville, BG 54321</p>
+          <p>Email: info@boardgamecafe.com</p>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2025 Board Game Cafe Official Site. All rights reserved.
+      </div>
+    </footer>
+    <script src="../../js/reviews.js"></script>
+  </body>
+</html>

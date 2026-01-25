@@ -1,0 +1,326 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+header nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+.reserve-btn {
+    padding: 8px 18px;
+    background: #704125;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← アイコンと文字の間隔 */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.logo-icon {
+    width: 100px;   /* アイコンのサイズ調整 */
+    height: 100px;  /* 好みに合わせて変更可能 */
+    object-fit: contain;
+}
+
+/* メインコンテナ */
+.container {
+    max-width: 1400px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+}
+
+/* サイドバー */
+.sidebar {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.sidebar h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.filter-section {
+    margin-bottom: 2rem;
+}
+
+.filter-section h4 {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-section label {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.filter-section input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.player-range {
+    margin-top: 1rem;
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+/* プレイ人数チップ */
+.player-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.player-chip {
+    appearance: none;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    user-select: none;
+}
+
+.player-chip:hover {
+    border-color: #b9b9b9;
+}
+
+.player-chip.is-active,
+.player-chip[aria-pressed="true"] {
+    background: #704125;
+    border-color: #704125;
+    color: #fff;
+}
+
+.player-chip:focus-visible {
+    outline: 3px solid rgba(112, 65, 37, 0.35);
+    outline-offset: 2px;
+}
+
+/* メインコンテンツ */
+.main-content {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 8px;
+}
+
+.main-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* ゲームグリッド */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.game-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.game-image {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #e0e0e0;
+    position: relative;
+}
+
+.game-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #8b6f47 0%, #6d5738 100%);
+    color: white;
+    font-size: 3rem;
+    gap: 0.5rem;
+}
+
+.game-image-placeholder .icon {
+    font-size: 4rem;
+    opacity: 0.8;
+}
+
+.game-image-placeholder .text {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.game-info {
+    padding: 1.5rem;
+}
+
+.game-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.game-description {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.game-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.game-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.availability {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.available {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.in-use {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+/* Footer */
+footer {
+    background: #f6f6f6;
+    padding: 50px 10%;
+    font-size: 13px;
+}
+footer .columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+footer a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    margin: 3px 0;
+}
+footer .copyright {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #777;
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
+}
+
+
+/* レスポンシブデザイン */
+@media (max-width: 968px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+}

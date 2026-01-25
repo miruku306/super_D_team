@@ -1,0 +1,169 @@
+/* リセット（軽め） */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height: 100%; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; color:#222; background:#f7f9fb; }
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+header nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+.reserve-btn {
+    padding: 8px 18px;
+    background: #704125;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← アイコンと文字の間隔 */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.logo-icon {
+    width: 100px;   /* アイコンのサイズ調整 */
+    height: 100px;  /* 好みに合わせて変更可能 */
+    object-fit: contain;
+}
+
+/* コンテナ */
+.container { max-width:980px; margin:36px auto; padding:0 18px; }
+
+/* タイトル */
+.page-title { font-size:28px; margin-bottom:6px; color:#0f1724; }
+.subtitle { color:#556577; margin-bottom:18px; }
+
+/* フォームカード */
+.form-card {
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 6px 22px rgba(20,40,80,0.06);
+  margin-bottom:18px;
+  border:1px solid #eef6ff;
+}
+.form-title { font-size:18px; margin-bottom:12px; color:#0b2540; }
+
+/* フォームレイアウト */
+.rental-form .form-row {
+  display:flex;
+  flex-direction:column;
+  margin-bottom:12px;
+}
+.label-title { margin-bottom:6px; color:#334155; font-weight:600; font-size:14px; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid #dbe8fb;
+  background:#fbfdff;
+  font-size:14px;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color:#90c5ff;
+  box-shadow:0 4px 12px rgba(43,142,255,0.12);
+}
+
+/* 2カラム */
+.grid-2 {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+/* アクションボタン */
+.form-actions {
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:8px;
+}
+.btn {
+  background:#f1f5f9;
+  border:1px solid #e2e8f0;
+  padding:9px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.primary-btn {
+  background:#0ea5e9;
+  color:#fff;
+  padding:9px 16px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+}
+
+/* 情報カード */
+.info-card {
+  margin-top:8px;
+  background:#fff;
+  padding:16px;
+  border-radius:10px;
+  border:1px solid #eef6ff;
+  box-shadow:0 4px 14px rgba(12,40,80,0.04);
+}
+.info-card h3 { margin-bottom:8px; color:#12324a; }
+.info-card ul { list-style: disc; padding-left:18px; color:#475569; }
+
+/* Footer */
+footer {
+    background: #f6f6f6;
+    padding: 50px 10%;
+    font-size: 13px;
+}
+footer .columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+footer a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    margin: 3px 0;
+}
+footer .copyright {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #777;
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
+}
+
+
+/* レスポンシブ */
+@media (max-width:700px) {
+  .grid-2 { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+  .container { padding:0 14px; }
+  .page-title { font-size:22px; }
+}
